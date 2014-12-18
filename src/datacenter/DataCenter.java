@@ -32,4 +32,8 @@ public class DataCenter{
 		Thread udpThread = new Thread(con);
 		udpThread.start();
 	}
+
+	public RunnableConnection getConnect(){
+		return con;
+	}
 }
