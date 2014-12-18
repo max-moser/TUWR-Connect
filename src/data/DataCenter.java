@@ -1,8 +1,6 @@
 package data;
 
 import java.sql.SQLException;
-import java.util.LinkedList;
-import java.util.List;
 
 import etc.DoubleLinkedList;
 
@@ -22,6 +20,15 @@ public class DataCenter{
 		else{
 			return null;
 		}
+	}
+	
+	public ConnectData getOldestDataEntry(){
+		@SuppressWarnings("unused")
+		int i = 0;
+		while(this.data.isEmpty()){
+			i++; // so that the CPU is not bored senseless
+		}
+		return this.data.getAndRemoveLast();
 	}
 	
 	public DoubleLinkedList<ConnectData> getData(){
