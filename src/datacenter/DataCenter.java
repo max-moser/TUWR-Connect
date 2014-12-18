@@ -1,13 +1,17 @@
 package datacenter;
 
 import java.sql.SQLException;
+import java.util.LinkedList;
 import java.util.List;
+
+import etc.DoubleLinkedList;
 
 public class DataCenter{
 	
 	private RunnableConnection con;
 	private SQLConnection db = new SQLConnection();
 	private static DataCenter instance;
+	protected DoubleLinkedList<ConnectData> data = new DoubleLinkedList<>(); 
 	
 	private DataCenter(){}
 	
@@ -20,12 +24,23 @@ public class DataCenter{
 		}
 	}
 	
+	public DoubleLinkedList<ConnectData> getData(){
+		return data;
+	}
+	
+	public synchronized void addToList(ConnectData conDat) {
+		data.addFirst(conDat);
+		while(data.size() > 1024){
+			data.remove(1023);
+		}
+	}
+	
 	public void select(String stmt) throws SQLException{
 		db.select(stmt);
 	}
 	
-	public List<ConnectData> getPuffer(){
-		return con.getData();
+	public DoubleLinkedList<ConnectData> getPuffer(){
+		return data;
 	}
 	
 	public void connect(RunnableConnection con){

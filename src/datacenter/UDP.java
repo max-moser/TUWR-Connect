@@ -5,8 +5,8 @@ import java.util.Date;
 
 public class UDP extends RunnableConnection{
 	
-	public UDP(){
-		super();
+	public UDP(DataCenter dc){
+		super(dc);
 	}
 
 	@Override
@@ -20,7 +20,7 @@ public class UDP extends RunnableConnection{
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);    
 				clientSocket.receive(receivePacket);   
 				ConnectData cdata = new ConnectData(Double.parseDouble(new String(receivePacket.getData())), new Date().getTime());
-				data.add(cdata);
+				dc.addToList(cdata);
 				db.insert(cdata, id); 
 			}
 		} catch (Exception e) {
