@@ -1,4 +1,4 @@
-package datacenter;
+package data;
 
 public abstract class RunnableConnection implements Runnable{
 	//run(); durch runnable

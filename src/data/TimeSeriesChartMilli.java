@@ -1,4 +1,4 @@
-package datacenter;
+package data;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
