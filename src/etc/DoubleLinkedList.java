@@ -23,7 +23,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @param elem The element to be added
 	 */
-	public void add(A elem){
+	public synchronized void add(A elem){
 		this.addFirst(elem);
 	}
 	
@@ -32,7 +32,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @param elem The element to be added
 	 */
-	public void addFirst(A elem){
+	public synchronized void addFirst(A elem){
 		if(this.root == null){
 			this.root = new ListNode(elem);
 			this.root.setSuccessor(this.root);
@@ -53,7 +53,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @param elem The element to be removed from the List
 	 */
-	public void remove(A elem){
+	public synchronized void remove(A elem){
 		throw new UnsupportedOperationException("Removing of individual Objects not yet implemented");
 	}
 	
@@ -62,7 +62,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return TRUE, if an element was removed and FALSE if the list was empty
 	 */
-	public boolean removeFirst(){
+	public synchronized boolean removeFirst(){
 		if(this.root == null){
 			return false;
 		}else if(this.root.getPredecessor() == this.root){
@@ -91,7 +91,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return TRUE, if an element was removed and FALSE, if the List was empty
 	 */
-	public boolean removeLast(){
+	public synchronized boolean removeLast(){
 		if(this.root == null){
 			return false;
 		}else if(this.root.getPredecessor() == this.root){
@@ -116,7 +116,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @param index The index of the element to remove (starting with 0)
 	 */
-	public void remove(int index){
+	public synchronized void remove(int index){
 		int i = index % this.size();
 		throw new UnsupportedOperationException("Removing of Objects at specified indices not yet implemented");
 	}
@@ -127,7 +127,7 @@ public class DoubleLinkedList<A> {
 	 * @param index The index of the element to return (starting with 0)
 	 * @return The element at the specified index if the List isn't empty and NULL otherwise.
 	 */
-	public A get(int index){
+	public synchronized A get(int index){
 		if(this.root == null){
 			return null;
 		}
@@ -149,7 +149,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return The head element of the List, or NULL if the List is empty
 	 */
-	public A getFirst(){
+	public synchronized A getFirst(){
 		if(this.root == null){
 			return null;
 		}else{
@@ -162,7 +162,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return The last element of the List, or NULL if the List is empty
 	 */
-	public A getLast(){
+	public synchronized A getLast(){
 		if(this.root == null){
 			return null;
 		}else{
@@ -175,7 +175,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return The last element of the List, or NULL if the List is empty
 	 */
-	public A getAndRemoveLast(){
+	public synchronized A getAndRemoveLast(){
 		if(this.root == null){
 			return null;
 		}else{
@@ -190,7 +190,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return An integer greater or equal to 0
 	 */
-	public int size(){
+	public synchronized int size(){
 		if(this.root == null){
 			return 0;
 		}else{
@@ -211,7 +211,7 @@ public class DoubleLinkedList<A> {
 	 * 
 	 * @return TRUE if the List is empty and FALSE otherwise.
 	 */
-	public boolean isEmpty(){
+	public synchronized boolean isEmpty(){
 		return (this.root == null);
 	}
 	

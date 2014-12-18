@@ -6,16 +6,26 @@ import etc.DoubleLinkedList;
 
 public class DataCenter{
 	
+	public enum ConnectionMode{
+		UDP, CAN;
+	}
+	
 	private RunnableConnection con;
 	private SQLConnection db = new SQLConnection();
 	private static DataCenter instance;
 	protected DoubleLinkedList<ConnectData> data = new DoubleLinkedList<>(); 
 	
-	private DataCenter(){}
+	private DataCenter(ConnectionMode initialMode, int port){
+		if(initialMode.equals(ConnectionMode.CAN)){
+			throw new UnsupportedOperationException("CAN Receiver not yet implemented");
+		}else{
+			con = new UDPConnection(this, port);
+		}
+	}
 	
 	public static DataCenter getInstance(){
 		if(instance == null){
-			return (instance = new DataCenter());
+			return (instance = new DataCenter(ConnectionMode.UDP, 10000));
 		}
 		else{
 			return null;
@@ -37,9 +47,9 @@ public class DataCenter{
 	
 	public synchronized void addToList(ConnectData conDat) throws SQLException {
 		data.addFirst(conDat);
-		db.insert(conDat, con.getId());
+//		db.insert(conDat, con.getId()); //TODO
 		while(data.size() > 1024){
-			data.remove(1023);
+			data.removeLast();
 		}
 	}
 	
@@ -51,7 +61,7 @@ public class DataCenter{
 		return data;
 	}
 	
-	public void connect(RunnableConnection con){
+	public void connect(){
 		Thread udpThread = new Thread(con);
 		udpThread.start();
 	}
