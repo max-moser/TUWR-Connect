@@ -66,13 +66,13 @@ public class DoubleLinkedList<A> {
 		if(this.root == null){
 			return false;
 		}else if(this.root.getPredecessor() == this.root){
-			// es ist nur das Root-Element vorhanden
+			// the list only contains the root element
 			this.root.setPredecessor(null);
 			this.root.setSuccessor(null);
 			this.root = null;
 			return true;
 		}else{
-			// es sind mehrere Elemente vorhanden
+			// there are several elements in the list
 			ListNode preRoot, succRoot;
 			preRoot = this.root.getPredecessor();
 			succRoot = this.root.getSuccessor();
@@ -95,11 +95,11 @@ public class DoubleLinkedList<A> {
 		if(this.root == null){
 			return false;
 		}else if(this.root.getPredecessor() == this.root){
-			// es ist nur das Root-Element vorhanden
+			// the list only contains the root element
 			this.root = null;
 			return true;
 		}else{
-			// es sind mehrere Elemente vorhanden
+			// there are several items in the list
 			ListNode last, preLast;
 			last = this.root.getPredecessor();
 			preLast = last.getPredecessor();
