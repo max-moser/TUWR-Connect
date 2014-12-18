@@ -28,8 +28,9 @@ public class DataCenter{
 		return data;
 	}
 	
-	public synchronized void addToList(ConnectData conDat) {
+	public synchronized void addToList(ConnectData conDat) throws SQLException {
 		data.addFirst(conDat);
+		db.insert(conDat, con.getId());
 		while(data.size() > 1024){
 			data.remove(1023);
 		}

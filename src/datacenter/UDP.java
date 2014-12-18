@@ -20,13 +20,11 @@ public class UDP extends RunnableConnection{
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);    
 				clientSocket.receive(receivePacket);   
 				ConnectData cdata = new ConnectData(Double.parseDouble(new String(receivePacket.getData())), new Date().getTime());
-				dc.addToList(cdata);
-				db.insert(cdata, id); 
+				dc.addToList(cdata); 
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 	
 	}
-	
 }
 

@@ -101,7 +101,7 @@ public class TimeSeriesChartMilli extends ApplicationFrame {
                 //dataset.appendData(newData);
          		
             	Millisecond s = new Millisecond();
-            	sensorSeries.add(s, dc.getData().getLastAndRemoveLast().getValue());
+            	sensorSeries.add(s, dc.getData().getAndRemoveLast().getValue());
             	s.next();
             	//sensorSeries.removeAgedItems(false);
                // dataset.removeAgedItems(false);
