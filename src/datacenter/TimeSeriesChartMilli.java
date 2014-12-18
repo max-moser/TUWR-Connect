@@ -37,13 +37,15 @@ public class TimeSeriesChartMilli extends ApplicationFrame {
     private static final int SLOW = FAST;
     private static final Random random = new Random();
     private Timer timer;
-    final Runnable reci;
+    private DataCenter dc;
+    private RunnableConnection udp;
 
     public TimeSeriesChartMilli(final String title) { 		
         super(title);
         
-        reci = new Receive();
- 		new Thread(reci).start();
+        dc = DataCenter.getInstance();
+        dc.connect(new UDP());
+        udp = dc.getConnect();
  		
         final TimeSeriesCollection dataset;
         final TimeSeries sensorSeries;
@@ -105,7 +107,7 @@ public class TimeSeriesChartMilli extends ApplicationFrame {
                 //dataset.appendData(newData);
          		
             	Millisecond s = new Millisecond();
-            	sensorSeries.add(s, ((Receive)reci).getData());
+            	sensorSeries.add(s, udp.getData().get(udp.getData().size()).getValue());
             	s.next();
             	//sensorSeries.removeAgedItems(false);
                // dataset.removeAgedItems(false);
