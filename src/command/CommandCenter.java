@@ -32,14 +32,25 @@ public class CommandCenter {
 	 */
 	public boolean sendData(byte id, byte[] data){
 		
-		if(activeMode == rotMode){
-			
-			return activeMode.sendData(id, data);
-		}else if(activeMode == torMode){
-			
-			return activeMode.sendData(id, data);
+		if(activeMode != rotMode && activeMode != torMode){
+			assert(false);
+			return false;
 		}
-		return false;
+		
+		// the active Mode will check against validity of 
+		return activeMode.sendData(id, data);
+		
+//		if(activeMode == rotMode){
+//			
+//			// TODO:
+//			// filter for ID (only rotation stuff)
+//			return activeMode.sendData(id, data);
+//		}else if(activeMode == torMode){
+//			
+//			// TODO:
+//			// filter for ID (only torque stuff)
+//			return activeMode.sendData(id, data);
+//		}
 	}
 	
 	/**
