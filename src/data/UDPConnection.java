@@ -21,15 +21,15 @@ public class UDPConnection extends RunnableConnection{
 			clientSocket = new DatagramSocket(port);
 			
 			while(true){
-				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);    
-				clientSocket.receive(receivePacket);   
+				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);   
+				clientSocket.receive(receivePacket);
 				ConnectData cdata = new ConnectData(Double.parseDouble(new String(receivePacket.getData())), new Date().getTime());
 				dc.addToList(cdata);
 			}
 			
-		} catch (Exception e) {
+		}catch (Exception e) {
 			e.printStackTrace();
-		} 	
+		}
 	}
 }
 

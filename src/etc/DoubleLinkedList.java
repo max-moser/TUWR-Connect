@@ -39,11 +39,12 @@ public class DoubleLinkedList<A> {
 			this.root.setPredecessor(this.root);
 		}else{
 			ListNode oldRoot = this.root;
-			this.root = new ListNode(elem);
+			ListNode newRoot = new ListNode(elem);
+			this.root = newRoot;
 			this.root.setSuccessor(oldRoot);
 			this.root.setPredecessor(oldRoot.pred);
 			
-			oldRoot.getSuccessor().setPredecessor(this.root);
+			oldRoot.getPredecessor().setSuccessor(this.root);
 			oldRoot.setPredecessor(this.root);
 		}
 	}
@@ -96,6 +97,8 @@ public class DoubleLinkedList<A> {
 			return false;
 		}else if(this.root.getPredecessor() == this.root){
 			// the list only contains the root element
+			this.root.setSuccessor(null);
+			this.root.setPredecessor(null);
 			this.root = null;
 			return true;
 		}else{
@@ -213,6 +216,13 @@ public class DoubleLinkedList<A> {
 	 */
 	public synchronized boolean isEmpty(){
 		return (this.root == null);
+	}
+	
+	/**
+	 * Clears the List's contents.
+	 */
+	public synchronized void clear(){
+		this.root = null;
 	}
 	
 	/**

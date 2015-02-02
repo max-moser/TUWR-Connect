@@ -46,8 +46,8 @@ public class DataCenter{
 	}
 	
 	public synchronized void addToList(ConnectData conDat) throws SQLException {
+		db.insert(conDat, con.getId()); // TODO Buffer fuer die DB, weil sonst zu langsam
 		data.addFirst(conDat);
-//		db.insert(conDat, con.getId()); //TODO
 		while(data.size() > 1024){
 			data.removeLast();
 		}
@@ -62,8 +62,8 @@ public class DataCenter{
 	}
 	
 	public void connect(){
-		Thread udpThread = new Thread(con);
-		udpThread.start();
+		Thread connectionThread = new Thread(con);
+		connectionThread.start();
 	}
 
 	public RunnableConnection getConnect(){
