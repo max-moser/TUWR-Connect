@@ -1,25 +1,20 @@
 package data;
 
 import java.sql.Date;
+import java.util.HashMap;
 
 public class ConnectData {
 
-	private double value;
 	private Date timestamp;
+	private HashMap<String, Double> data;
 	
-	public ConnectData(double value, Long timestamp){
-		this.value = value;
+	public ConnectData(HashMap<String, Double> data, Long timestamp){
+		this.data = data;
 		this.timestamp = new Date(timestamp);
 	}
 	
-	public ConnectData(String unparsedData){
-		String[] parsedData = unparsedData.split("|");
-		value = Double.parseDouble(parsedData[0]);
-		timestamp = new Date(Long.parseLong(parsedData[1]));
-	}
-	
-	public double getValue() {
-		return value;
+	public HashMap<String, Double> getValueMap() {
+		return data;
 	}
 
 	public Date getTimeStamp() {

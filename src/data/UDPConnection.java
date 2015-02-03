@@ -23,7 +23,7 @@ public class UDPConnection extends RunnableConnection{
 			while(true){
 				DatagramPacket receivePacket = new DatagramPacket(receiveData, receiveData.length);   
 				clientSocket.receive(receivePacket);
-				ConnectData cdata = new ConnectData(Double.parseDouble(new String(receivePacket.getData())), new Date().getTime());
+				ConnectData cdata = new ConnectData(pars.pars(receivePacket.getData()), new Date().getTime());
 				dc.addToList(cdata);
 			}
 			

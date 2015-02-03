@@ -1,5 +1,7 @@
 package main;
 
+import java.sql.SQLException;
+
 import command.CommandCenter;
 import data.DataCenter;
 import data.UDPConnection;
@@ -13,6 +15,11 @@ public class Main {
 		PeakCanHandler canHandler = new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, TPCANBaudrate.PCAN_BAUD_1M);
 		CommandCenter cc = new CommandCenter(canHandler);
 		DataCenter dc = DataCenter.getInstance();
-		dc.connect();
+		try {
+			dc.connect();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 }

@@ -44,7 +44,12 @@ public class TimeSeriesChart extends ApplicationFrame {
 		super(title);
 
 		dc = DataCenter.getInstance();
-		dc.connect();
+		try {
+			dc.connect();
+		} catch (SQLException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		//        dc.getConnect();
 
 		final TimeSeriesCollection dataset;
@@ -104,7 +109,7 @@ public class TimeSeriesChart extends ApplicationFrame {
 				if(cd != null){
 
 					Millisecond ms = new Millisecond(cd.getTimeStamp());
-					sensorSeries.addOrUpdate(ms, cd.getValue());
+					sensorSeries.addOrUpdate(ms, cd.getValueMap().get("data"));
 //					ms.next();
 
 				}

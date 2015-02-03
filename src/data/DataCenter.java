@@ -1,5 +1,6 @@
 package data;
 
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import etc.DoubleLinkedList;
@@ -11,11 +12,14 @@ public class DataCenter{
 	}
 	
 	private RunnableConnection con;
-	private SQLConnection db = new SQLConnection();
-	private static DataCenter instance;
 	protected DoubleLinkedList<ConnectData> data = new DoubleLinkedList<>(); 
+	private SQLConnection db;
+	private static DataCenter instance;
+	private Thread connectionThread;
 	
 	private DataCenter(ConnectionMode initialMode, int port){
+		db = new SQLConnection(con, con.getParser()); 
+		 
 		if(initialMode.equals(ConnectionMode.CAN)){
 			throw new UnsupportedOperationException("CAN Receiver not yet implemented");
 		}else{
@@ -45,25 +49,36 @@ public class DataCenter{
 		return data;
 	}
 	
-	public synchronized void addToList(ConnectData conDat) throws SQLException {
-		db.insert(conDat, con.getId()); // TODO Buffer fuer die DB, weil sonst zu langsam
+	protected synchronized void addToList(ConnectData conDat) throws SQLException {
+		db.insertData(conDat); // TODO Buffer fuer die DB, weil sonst zu langsam
 		data.addFirst(conDat);
 		while(data.size() > 1024){
 			data.removeLast();
 		}
 	}
 	
-	public void select(String stmt) throws SQLException{
-		db.select(stmt);
+	public ResultSet select(String stmt) throws SQLException{
+		return db.select(stmt);
 	}
 	
 	public DoubleLinkedList<ConnectData> getPuffer(){
 		return data;
 	}
 	
-	public void connect(){
-		Thread connectionThread = new Thread(con);
+	public void connect() throws SQLException{
+		db.insertUnits();	
+		connectionThread = new Thread(con);
 		connectionThread.start();
+	}
+	
+	public void changeConnection(int port, RunnableConnection con){
+		this.con = con;
+		db = new SQLConnection(con, con.getParser()); 
+		data.clear();
+	}
+	
+	public void disconnect(){
+		connectionThread.interrupt();
 	}
 
 	public RunnableConnection getConnect(){
