@@ -18,11 +18,12 @@ public class TorqueMode implements Mode {
 	@Override
 	public boolean sendData(byte id, byte[] data) {
 
-		boolean isValidID = false;
+		boolean isValidID = false, isValidMsg = false;
 
-		isValidID = this.validIDs.contains(id);
+		isValidID = this.isValidId(id);
+		isValidMsg = this.isValidMessage(data);
 
-		if(isValidID == false){
+		if((isValidID == false) || (isValidMsg == false)){
 			return false;
 		}else{
 			return this.canHandler.write((byte)id, (byte)data.length, (byte)0, data);
@@ -37,6 +38,16 @@ public class TorqueMode implements Mode {
 	@Override
 	public boolean isValidId(int id) {
 		return this.validIDs.contains(id);
+	}
+
+	@Override
+	public boolean isValidMessage(byte[] msg) {
+		boolean valid = true;
+		valid = msg.length == 8;
+		// the mode bits for both MODL & MODR must be 0!
+		valid = valid && ((msg[1] & 0x4) == 0);
+		valid = valid && ((msg[1] & 0x2) == 0);
+		return valid;
 	}
 
 }

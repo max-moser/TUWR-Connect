@@ -26,6 +26,17 @@ public class CommandCenter {
 	
 	/**
 	 * TODO
+	 * @param cmd
+	 * @return
+	 */
+	public boolean executeCommand(String cmd){
+		// TODO
+		// find out 
+		return true;
+	}
+	
+	/**
+	 * TODO
 	 * @param id
 	 * @param data
 	 * @return

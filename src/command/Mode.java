@@ -25,8 +25,16 @@ public interface Mode {
 	/**
 	 * Checks the specified ID against validity in the Mode and returns a corresponding boolean value.
 	 * 
-	 * @param id The id to check against validity for the current mode
-	 * @return TRUE, if the specified id is valid for the mode; FALSE otherwise
+	 * @param id The ID to check against validity for the current mode
+	 * @return TRUE, if the specified ID is valid for the mode; FALSE otherwise
 	 */
 	public boolean isValidId(int id);
+	
+	/**
+	 * Checks the specified message against validity in the Mode and returns a corresponding boolean value.
+	 * 
+	 * @param msg The message to check
+	 * @return TRUE, if the specified message is valid for the mode and FALSE otherwise
+	 */
+	public boolean isValidMessage(byte[] msg);
 }
