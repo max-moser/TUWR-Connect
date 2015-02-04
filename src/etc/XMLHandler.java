@@ -1,7 +1,6 @@
 package etc;
 
 import org.xml.sax.Attributes;
-import org.xml.sax.SAXException;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
@@ -46,11 +45,10 @@ public abstract class XMLHandler extends DefaultHandler{
 	}
 	
 	/**
-	 * 
+	 * TODO
 	 * @return
 	 */
 	public Object getResult(){
-		// TODO
 		return new Integer(1337);
 	}
 	

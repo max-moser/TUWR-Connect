@@ -1,6 +1,7 @@
 package command;
 
-import java.util.HashMap;
+import java.util.ArrayList;
+import java.util.List;
 
 import peak.can.basic.PeakCanHandler;
 
@@ -13,7 +14,7 @@ public class CommandCenter {
 	private Mode activeMode;
 	private final RotationMode rotMode;
 	private final TorqueMode torMode;
-	private final HashMap<String, Command> commands;
+	private final List<Command> commands;
 	
 	/**
 	 * Creates a new CommandCenter with the specified CanHandler.
@@ -22,7 +23,7 @@ public class CommandCenter {
 	 * @param canHandler
 	 */
 	public CommandCenter(PeakCanHandler canHandler){
-		this.commands = new HashMap<String, Command>();
+		this.commands = new ArrayList<Command>();
 		this.rotMode = new RotationMode(canHandler);
 		this.torMode = new TorqueMode(canHandler);
 		this.activeMode = rotMode;
@@ -33,10 +34,23 @@ public class CommandCenter {
 	 * @param cmd
 	 * @return
 	 */
-	public boolean executeCommand(String cmd){
-		// TODO
-		// find out 
-		return true;
+	public boolean executeCommand(String cmd){ // TODO TODO TODO
+		Command command = null;
+		for(Command c: this.commands){
+			if(c.getName().equalsIgnoreCase(cmd)){
+				command = c;
+				break;
+			}
+		}
+		
+		if(command == null){
+			return false;
+		}
+		
+		byte id = CommandToCAN.getID(command);
+		byte[] data = CommandToCAN.getData(command);
+		
+		return this.sendData(id, data);
 	}
 	
 	/**

@@ -22,7 +22,7 @@ public class CommandToCAN {
 	public static byte[] getData(Command c){
 		byte[] ret = new byte[8];
 		
-		
+		// TODO
 		
 		return ret;
 	}
