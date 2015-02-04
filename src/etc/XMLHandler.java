@@ -33,4 +33,13 @@ public abstract class XMLHandler extends DefaultHandler{
 		System.err.println("LAND IN SICHT");
 	}
 	
+	/**
+	 * 
+	 * @return
+	 */
+	public Object getResult(){
+		// TODO
+		return new Integer(1337);
+	}
+	
 }

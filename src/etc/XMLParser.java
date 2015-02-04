@@ -12,12 +12,14 @@ import org.xml.sax.XMLReader;
 
 public class XMLParser{
 
-	private XMLReader xmlReader = null;
-	private SAXParser saxParser = null;
+	private final XMLReader xmlReader;
+	private final SAXParser saxParser;
+	private final XMLHandler xmlHandler;
 	
 	public XMLParser(XMLHandler handler) throws ParserConfigurationException, SAXException{
 		this.saxParser = SAXParserFactory.newInstance().newSAXParser();
 		this.xmlReader = this.saxParser.getXMLReader();
+		this.xmlHandler = handler;
 		this.xmlReader.setContentHandler(handler);
 	}
 	
@@ -33,8 +35,9 @@ public class XMLParser{
 	 * @throws IOException
 	 * @throws SAXException
 	 */
-	public void parse(String filename) throws IOException, SAXException{
+	public Object parse(String filename) throws IOException, SAXException{
 		this.xmlReader.parse(convertToFileURL(filename));
+		return this.xmlHandler.getResult();
 	}
 
 	/**
