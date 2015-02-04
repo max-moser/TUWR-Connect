@@ -19,4 +19,12 @@ public class FixPoint {
 		return new byte[2];
 //		return this.number.byteValue();
 	}
+	
+	public String toString(){
+		StringBuffer buf = new StringBuffer();
+		
+		buf.append(number.toString());
+		
+		return buf.toString();
+	}
 }

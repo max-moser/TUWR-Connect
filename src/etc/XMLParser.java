@@ -17,10 +17,13 @@ public class XMLParser{
 	private final XMLHandler xmlHandler;
 	
 	public XMLParser(XMLHandler handler) throws ParserConfigurationException, SAXException{
-		this.saxParser = SAXParserFactory.newInstance().newSAXParser();
+		SAXParserFactory spf = SAXParserFactory.newInstance();
+		spf.setValidating(true);
+		this.saxParser = spf.newSAXParser();
 		this.xmlReader = this.saxParser.getXMLReader();
 		this.xmlHandler = handler;
 		this.xmlReader.setContentHandler(handler);
+		this.xmlReader.setErrorHandler(handler);
 	}
 	
 	/**

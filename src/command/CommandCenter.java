@@ -8,7 +8,7 @@ public class CommandCenter {
 
 	// predefined IDs, according to the TUWR Intranet
 	public final static byte ID_ZERO = 0;
-	public final static int ROTATION_MODE = 0, TORQUE_MODE = 1;
+	public final static int ROTATION_MODE = 1, TORQUE_MODE = 0;
 	
 	private Mode activeMode;
 	private final RotationMode rotMode;
