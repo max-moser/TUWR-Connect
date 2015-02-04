@@ -1,5 +1,7 @@
 package command;
 
+import etc.FixPoint;
+
 public class Parameter {
 
 	private final String name;
