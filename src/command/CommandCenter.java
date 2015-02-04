@@ -1,5 +1,7 @@
 package command;
 
+import java.util.HashMap;
+
 import peak.can.basic.PeakCanHandler;
 
 public class CommandCenter {
@@ -11,6 +13,7 @@ public class CommandCenter {
 	private Mode activeMode;
 	private final RotationMode rotMode;
 	private final TorqueMode torMode;
+	private final HashMap<String, Command> commands;
 	
 	/**
 	 * Creates a new CommandCenter with the specified CanHandler.
@@ -19,6 +22,7 @@ public class CommandCenter {
 	 * @param canHandler
 	 */
 	public CommandCenter(PeakCanHandler canHandler){
+		this.commands = new HashMap<String, Command>();
 		this.rotMode = new RotationMode(canHandler);
 		this.torMode = new TorqueMode(canHandler);
 		this.activeMode = rotMode;
