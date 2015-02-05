@@ -104,6 +104,22 @@ public class CommandToCAN {
 		csum[0] = (byte)0b0000_0000;
 		csum[1] = (byte)0b0000_0000;
 		
+		int cnt = 0;
+		byte tmp = (byte)0b1000_0000;
+		
+		for(int i=0; i<b.length; i++){
+			tmp = (byte)0b1000_0000;
+			for(int j=0; j<8; j++){
+				if((tmp & b[i]) > 0){
+					cnt ++;
+				}
+				tmp >>= 1;
+			}
+		}
+		
+		csum[1] = (byte)cnt;
+		csum[0] = (byte)(cnt >> 8);
+		
 		return csum;
 	}
 }
