@@ -14,7 +14,7 @@ public class FixPoint {
 	 * 
 	 * @return
 	 */
-	public byte[] returnFormatted(){
+	public byte[] getFormatted(int fixpoint, int length){
 		// TODO
 		return new byte[2];
 //		return this.number.byteValue();
