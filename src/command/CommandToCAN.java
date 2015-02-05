@@ -65,22 +65,19 @@ public class CommandToCAN {
 					tmp = value[0];
 					tmp >>= bitsright;
 					ret[b] = (byte)(ret[b] | tmp);
-					System.out.println(p.getName() + Integer.toBinaryString(tmp));
-					System.out.println(bitsright);
-					System.out.println("---");
 					
 				}else{
 					
 					tmp = value[ind - 1];
 					tmp <<= bitsleft;
 					ret[b] = (byte)(ret[b] | tmp);
+					
 					tmp = value[ind];
 					tmp >>= bitsright;
 					ret[b] = (byte)(ret[b] | tmp);
 					
 				}
 			}
-			
 		}
 		
 		// calculate checksum & place it in the CAN message
