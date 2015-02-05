@@ -1,10 +1,13 @@
+<!ELEMENT out (command*)>
+
 <!ELEMENT command (param*)>
 	<!ATTLIST command name ID #REQUIRED>
 	<!ATTLIST command id CDATA #REQUIRED>
 
 <!ELEMENT param EMPTY>
-	<!ATTLIST param name ID #REQUIRED>
+	<!ATTLIST param name CDATA #REQUIRED>
 	<!ATTLIST param offset CDATA #REQUIRED>
 	<!ATTLIST param length CDATA #REQUIRED>
 	<!ATTLIST param default CDATA "0">
 	<!ATTLIST param fixpoint CDATA "-1">
+

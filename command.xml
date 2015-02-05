@@ -1,17 +1,19 @@
-<!DOCTYPE command SYSTEM "command.dtd">
-<command name="start" id="50">
-	<param name="modl" offset="1" length="1" default="0" />
-	<param name="modr" offset="2" length="1" default="0" />
-	<param name="r2d" offset="3" length="1" default="1"  />
-	<param name="bp" offset="4" length="1" default="0" />
-	<param name="left" offset="16" length="16" default="0" fixpoint="6" />
-	<param name="right" offset="32" length="16" default="0"  />
-</command>
-<command name="stop" id="50">
-	<param name="modl" offset="1" length="1" default="0" />
-	<param name="modr" offset="2" length="1" default="0" />
-	<param name="r2d" offset="3" length="1" default="0"  />
-	<param name="bp" offset="4" length="1" default="0" />
-	<param name="left" offset="16" length="16" default="0" fixpoint="6" />
-	<param name="right" offset="32" length="16" default="0"  />
-</command>
+<!DOCTYPE out SYSTEM "command.dtd">
+<out>
+	<command name="start" id="50">
+		<param name="modl" offset="1" length="1" default="0" />
+		<param name="modr" offset="2" length="1" default="0" />
+		<param name="r2d" offset="3" length="1" default="1"  />
+		<param name="bp" offset="4" length="1" default="0" />
+		<param name="left" offset="16" length="16" default="0" fixpoint="6" />
+		<param name="right" offset="32" length="16" default="0"  />
+	</command>
+	<command name="stop" id="50">
+		<param name="modl" offset="1" length="1" default="0" />
+		<param name="modr" offset="2" length="1" default="0" />
+		<param name="r2d" offset="3" length="1" default="0"  />
+		<param name="bp" offset="4" length="1" default="0" />
+		<param name="left" offset="16" length="16" default="0" fixpoint="6" />
+		<param name="right" offset="32" length="16" default="0"  />
+	</command>
+</out>
