@@ -1,16 +1,19 @@
 package main;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import peak.can.basic.PeakCanHandler;
 import peak.can.basic.TPCANBaudrate;
 import peak.can.basic.TPCANHandle;
-
 import command.Command;
 import command.CommandCenter;
 import command.CommandHandler;
-
 import data.DataCenter;
 import etc.XMLParser;
 
@@ -39,7 +42,18 @@ public class Main {
 
 
 		PeakCanHandler canHandler = new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, TPCANBaudrate.PCAN_BAUD_1M);
-		CommandCenter cc = new CommandCenter(canHandler);
+		try {
+			CommandCenter cc = new CommandCenter(canHandler);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (SAXException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		} catch (ParserConfigurationException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		DataCenter dc = DataCenter.getInstance();
 		try {
 			dc.connect();
