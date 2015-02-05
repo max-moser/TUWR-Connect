@@ -55,7 +55,8 @@ public class CommandToCAN {
 			bitsright = bitnofrom; // the amount of bits to shift FP[i] to the right
 			bitsleft = 8 - bitsright; // the amount of bits to shift FP[i-1] to the left
 			
-			// TODO bug!
+			// for a bit understanding, have a look at the draft that i made
+			// TODO scan draft & save it in src folder
 			for(int b = bytenofrom; b <= bytenoto; b++){
 				ind = b - bytenofrom; // the index of the byte from the FP
 				tmp = 0;
