@@ -48,22 +48,26 @@ public class CommandToCAN {
 			// e.g. if the bit length of the value is 13, the bytes look like this:
 			// [XXXX XXXX][XXXX X000]
 			
-			bytenofrom = offset / 8; // the index of the starting byte (ranging from 0 to 8)
+			bytenofrom = offset / 8; // the index of the starting byte (ranging from 0 to 7)
 			bitnofrom = offset % 8; // the index of the starting bit in the starting byte (0 = highest value, 7 = least value)
-			bytenoto = (offset + length) / 8; // the index of the ending byte (should be greater or equal to the starting byte)
+			bytenoto = (offset + length - 1) / 8; // the index of the ending byte (should be greater or equal to the starting byte)
 			
 			bitsright = bitnofrom; // the amount of bits to shift FP[i] to the right
 			bitsleft = 8 - bitsright; // the amount of bits to shift FP[i-1] to the left
 			
-			for(int b = bytenofrom; b < bytenoto; b++){
+			// TODO bug!
+			for(int b = bytenofrom; b <= bytenoto; b++){
 				ind = b - bytenofrom; // the index of the byte from the FP
 				tmp = 0;
 				
 				if(ind == 0){
 					
-					tmp = value[ind];
+					tmp = value[0];
 					tmp >>= bitsright;
 					ret[b] = (byte)(ret[b] | tmp);
+					System.out.println(p.getName() + Integer.toBinaryString(tmp));
+					System.out.println(bitsright);
+					System.out.println("---");
 					
 				}else{
 					
