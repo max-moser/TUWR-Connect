@@ -1,9 +1,16 @@
 package command;
 
-import java.util.ArrayList;
+import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
 import peak.can.basic.PeakCanHandler;
+import etc.FixPoint;
+import etc.XMLParser;
 
 public class CommandCenter {
 
@@ -21,20 +28,32 @@ public class CommandCenter {
 	 * The CommandCenter uses the CanHandler to write Data to the CAN bus.
 	 * 
 	 * @param canHandler
+	 * @throws ParserConfigurationException 
+	 * @throws SAXException 
+	 * @throws IOException 
 	 */
-	public CommandCenter(PeakCanHandler canHandler){
-		this.commands = new ArrayList<Command>();
+	public CommandCenter(PeakCanHandler canHandler) throws IOException, SAXException, ParserConfigurationException{
+		CommandHandler c = new CommandHandler();
+		
+		new XMLParser(c).parse("commands.xml");
+		this.commands = c.getResult();
+		
 		this.rotMode = new RotationMode(canHandler);
 		this.torMode = new TorqueMode(canHandler);
 		this.activeMode = rotMode;
 	}
 	
 	/**
-	 * TODO
-	 * @param cmd
+	 * Checks if the specified command has been 
+	 * 
+	 * Neither cmd nor params may be null.
+	 * 
+	 * @param cmd The command's name
+	 * @param params A HashMap containing the parameter names as keys and the corresponding values as... values
 	 * @return
 	 */
-	public boolean executeCommand(String cmd){ // TODO TODO TODO
+	public boolean executeCommand(String cmd, HashMap<String, FixPoint> params){
+		// look for the command
 		Command command = null;
 		for(Command c: this.commands){
 			if(c.getName().equalsIgnoreCase(cmd)){
@@ -47,8 +66,25 @@ public class CommandCenter {
 			return false;
 		}
 		
-		byte id = CommandToCAN.getID(command);
-		byte[] data = CommandToCAN.getData(command);
+		// clone the template command
+		// and set its parameters
+		Command exec = new Command(command);
+		List<Parameter> parameters = exec.getParameters();
+		
+		for(Parameter p: parameters){
+			String pName = p.getName();
+			if(params.get(pName) != null){
+				exec.replaceParameter(pName, params.get(pName));
+			}else{
+				// TODO exception?
+				// or just ignore?
+			}
+		}
+		
+		// convert the command to CAN
+		// and execute it
+		byte id = CommandToCAN.getID(exec);
+		byte[] data = CommandToCAN.getData(exec);
 		
 		return this.sendData(id, data);
 	}
