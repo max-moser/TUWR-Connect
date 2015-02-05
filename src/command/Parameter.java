@@ -84,4 +84,20 @@ public class Parameter {
 		
 		return buf.toString();
 	}
+
+	public int getOffset() {
+		return offset;
+	}
+
+	public int getLength() {
+		return length;
+	}
+
+	public int getFixpoint() {
+		return fixpoint;
+	}
+
+	public FixPoint getDefaultValue() {
+		return defaultValue;
+	}
 }

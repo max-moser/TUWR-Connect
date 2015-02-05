@@ -1,5 +1,9 @@
 package command;
 
+import java.util.List;
+
+import etc.FixPoint;
+
 public class CommandToCAN {
 
 	/**
@@ -21,6 +25,21 @@ public class CommandToCAN {
 	 */
 	public static byte[] getData(Command c){
 		byte[] ret = new byte[8];
+		
+		for(int i=0; i<8; i++){
+			ret[i] = 0;
+		}
+		
+		List<Parameter> params = c.getParameters();
+		
+		for(Parameter p: params){
+			int offset = p.getOffset();
+			int length = p.getLength();
+			int fixpoint = p.getFixpoint();
+			FixPoint value = p.getValue();
+			
+			
+		}
 		
 		// TODO
 		

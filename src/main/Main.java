@@ -1,7 +1,12 @@
 package main;
 
+import java.io.IOException;
 import java.sql.SQLException;
 import java.util.List;
+
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
 
 import peak.can.basic.PeakCanHandler;
 import peak.can.basic.TPCANBaudrate;
@@ -16,7 +21,7 @@ import etc.XMLParser;
 
 public class Main {
 
-	public static void main(String[] args){
+	public static void main(String[] args) throws IOException, SAXException, ParserConfigurationException{
 
 		boolean quit = true;
 

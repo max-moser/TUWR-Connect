@@ -73,11 +73,9 @@ public class CommandCenter {
 		
 		for(Parameter p: parameters){
 			String pName = p.getName();
+			// if a parameter could not be found, its default value will be used
 			if(params.get(pName) != null){
 				exec.replaceParameter(pName, params.get(pName));
-			}else{
-				// TODO exception?
-				// or just ignore?
 			}
 		}
 		
