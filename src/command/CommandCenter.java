@@ -35,7 +35,7 @@ public class CommandCenter {
 	public CommandCenter(PeakCanHandler canHandler) throws IOException, SAXException, ParserConfigurationException{
 		CommandHandler c = new CommandHandler();
 		
-		new XMLParser(c).parse("commands.xml");
+		new XMLParser(c).parse("command.xml");
 		this.commands = c.getResult();
 		
 		this.rotMode = new RotationMode(canHandler);
