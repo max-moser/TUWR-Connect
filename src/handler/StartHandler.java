@@ -1,19 +1,12 @@
 package handler;
 
+import etc.FixPoint;
 import gui.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.IOException;
-
-import javax.xml.parsers.ParserConfigurationException;
-
-import org.xml.sax.SAXException;
-
-import peak.can.basic.PeakCanHandler;
-import peak.can.basic.TPCANBaudrate;
-import peak.can.basic.TPCANHandle;
-import command.CommandCenter;
+import java.util.HashMap;
+import command.CommandProxy;
 
 /**
  * 
@@ -42,39 +35,17 @@ public class StartHandler implements ActionListener {
 		
 		switch(indicator){
 		case 0:
-			try {
-				new CommandCenter(new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, TPCANBaudrate.PCAN_BAUD_1M)).executeCommand("start", null);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SAXException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ParserConfigurationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			HashMap<String,FixPoint> param = new HashMap<String,FixPoint>();
+			param.put("left", new FixPoint("1"));
+			CommandProxy.getInstance().executeCommand("start", param);
 			break;
 		case 1:
-			try {
-				new CommandCenter(new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, TPCANBaudrate.PCAN_BAUD_1M)).executeCommand("stop", null);
-			} catch (IOException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (SAXException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			} catch (ParserConfigurationException e1) {
-				// TODO Auto-generated catch block
-				e1.printStackTrace();
-			}
+			new StopMotor(gui).stopMotor(true);
 			break;
 		default:
 			assert(false);
 			break;
 		}
-		
-		//TODO send message indicated by indicator
 
 	}
 

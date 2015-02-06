@@ -65,7 +65,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         this.setLocationRelativeTo(null);
         //NOTE: experimental-code
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
-        this.addWindowListener(new GuiWindowHandler());
+        this.addWindowListener(new GuiWindowHandler(this));
         
         /* set component listener */
         ct_torque_radio.addActionListener(new ControlRadioButtonHandler(this));
@@ -721,6 +721,25 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     }
     
     /**
+     * Returns whether all motors have been stopped.
+     * 
+     * @return all stopped
+     */
+    public boolean allStopped(){
+    	
+    	boolean ret = false;
+    	
+    	if(runbutton.getText().equals("Start")){
+    		if(runbutton_r.getText().equals("Start")){
+    			ret = true;
+    		}
+    	}
+    	
+    	return ret;
+    	
+    }
+    
+    /**
      * Adapts the text from the runbutton_r and returns an integer, which
      * indicates the message to be send.
      * <ul>
@@ -831,6 +850,148 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 			
 		}
 		
+	}
+	
+	/**
+	 * Returns the current torque of the left motor.
+	 * @return torque of left motor
+	 */
+	public double getTorque(){
+		return Double.valueOf(torque_output.getText());
+	}
+	
+	/**
+	 * Returns the current torque of the right motor.
+	 * @return torque of right motor
+	 */
+	public double getTorqueR(){
+		return Double.valueOf(torque_output_r.getText());
+	}
+	
+	/**
+	 * Returns whether the left motor is running.
+	 * 
+	 * @return status of the left motor
+	 */
+	public boolean leftStarted(){
+		
+		if(runbutton.getText().equals("Stop")){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * Returns whether the right motor is running.
+	 * 
+	 * @return status of right motor
+	 */
+	public boolean rightStarted(){
+		
+		if(runbutton_r.getText().equals("Stop")){
+			return true;
+		}else{
+			return false;
+		}
+		
+	}
+	
+	/**
+	 * Returns the information about the left control tab.
+	 * 
+	 * @return left control tab information
+	 */
+	public ControlInformation leftInformation(){
+		int modus = 0;
+		if(ct_rotation_radio.isSelected()){
+			modus = 1;
+		}
+		
+		double value = 0;
+		
+		try{
+			
+			value = Double.valueOf(ct_tr_input.getText());
+			
+		}catch(NumberFormatException nfe){
+			
+			switch(modus){
+			case 0:
+				value = Double.valueOf(torque_output.getText());
+				break;
+			case 1:
+				value = Double.valueOf(rotation_output.getText());
+				break;
+			default:
+				assert(false);
+				break;
+			}
+			
+		}
+		
+		double id = 0;
+		
+		try{
+			
+			id = Double.valueOf(ct_id_input.getText());
+			
+		}catch(NumberFormatException nfe){
+			
+			id = Double.valueOf(ct_id_output.getText());
+			
+		}
+		
+		return new ControlInformation(modus,value,id);
+	}
+	
+	/**
+	 * Returns the information about the right control tab.
+	 * 
+	 * @return right control tab information
+	 */
+	public ControlInformation rightInformation(){
+		int modus = 0;
+		if(ct_rotation_radio_r.isSelected()){
+			modus = 1;
+		}
+		
+		double value = 0;
+		
+		try{
+			
+			value = Double.valueOf(ct_tr_input_r.getText());
+			
+		}catch(NumberFormatException nfe){
+			
+			switch(modus){
+			case 0:
+				value = Double.valueOf(torque_output_r.getText());
+				break;
+			case 1:
+				value = Double.valueOf(rotation_output_r.getText());
+				break;
+			default:
+				assert(false);
+				break;
+			}
+			
+		}
+		
+		double id = 0;
+		
+		try{
+			
+			id = Double.valueOf(ct_id_input1.getText());
+			
+		}catch(NumberFormatException nfe){
+			
+			id = Double.valueOf(ct_id_output1.getText());
+			
+		}
+		
+		return new ControlInformation(modus,value,id);
 	}
     
     /**

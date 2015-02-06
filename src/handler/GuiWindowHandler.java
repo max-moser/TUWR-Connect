@@ -1,7 +1,11 @@
 package handler;
 
+import gui.GUI;
+
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
+
+import command.CommandProxy;
 
 /**
  * 
@@ -12,8 +16,10 @@ import java.awt.event.WindowListener;
 
 public class GuiWindowHandler implements WindowListener {
 
-	public GuiWindowHandler() {
-		// TODO Auto-generated constructor stub
+	private GUI gui;
+	
+	public GuiWindowHandler(GUI gui) {
+		this.gui = gui;
 	}
 
 	@Override
@@ -31,10 +37,22 @@ public class GuiWindowHandler implements WindowListener {
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		
-		/*
-		 * Close all open connections and exit the program afterwards
-		 */
-		//TODO
+		if(!gui.allStopped()){
+			
+			if(gui.leftStarted()){
+				new StopMotor(gui).stopMotor(true);
+			}
+			if(gui.rightStarted()){
+				new StopMotor(gui).stopMotor(true);
+			}
+			
+		}
+		CommandProxy.getInstance().executeCommand("stop", null);
+		try {
+			Thread.sleep(100);
+		} catch (InterruptedException e) {
+			e.printStackTrace();
+		}
 		System.exit(1);
 
 	}
