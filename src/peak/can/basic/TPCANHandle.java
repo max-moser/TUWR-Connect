@@ -161,7 +161,11 @@ public enum TPCANHandle
                     case PCAN_TYPE_DNG_SJA_EPP:
                     case PCAN_TYPE_ISA_SJA:
                         return true;
+					default:
+						break;
                 }
+			default:
+				break;
         }
         return false;
     }

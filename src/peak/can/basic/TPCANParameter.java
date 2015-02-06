@@ -154,7 +154,9 @@ public enum TPCANParameter
                 break;                
             case PCAN_TRACE_CONFIGURE:
                 description = "This Parameter is used to configure the trace file storing mode (TRACE_FILE_***).";
-                break;                                    
+                break;
+			default:
+				break;                                    
         }
         return description;
     }

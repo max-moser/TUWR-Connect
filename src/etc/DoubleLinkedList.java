@@ -50,15 +50,6 @@ public class DoubleLinkedList<A> {
 	}
 	
 	/**
-	 * Removes the specified element from the list
-	 * 
-	 * @param elem The element to be removed from the List
-	 */
-	public synchronized void remove(A elem){
-		throw new UnsupportedOperationException("Removing of individual Objects not yet implemented");
-	}
-	
-	/**
 	 * Removes the first element in the List.
 	 * 
 	 * @return TRUE, if an element was removed and FALSE if the list was empty
@@ -112,16 +103,6 @@ public class DoubleLinkedList<A> {
 			last.setSuccessor(null);
 			return true;
 		}
-	}
-	
-	/**
-	 * Removes the element at the specified position
-	 * 
-	 * @param index The index of the element to remove (starting with 0)
-	 */
-	public synchronized void remove(int index){
-		int i = index % this.size();
-		throw new UnsupportedOperationException("Removing of Objects at specified indices not yet implemented");
 	}
 	
 	/**

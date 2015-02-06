@@ -29,33 +29,6 @@ public class PeakCanHandler {
 		this.msg = new TPCANMsg();
 	}
 	
-	public void doSomething(){
-		while(true){
-			
-			TPCANStatus stat;
-			while((stat = this.can.Read(this.handle, this.msg, null)) == TPCANStatus.PCAN_ERROR_OK){
-				byte[] dat = this.msg.getData();
-				String str = "";
-				
-				if(dat.length > 0){
-					str = Byte.toString(dat[0]);
-					for(int i=1; i<dat.length; i++){
-						str += ":" + Byte.toString(dat[i]);
-					}
-				}
-				
-				System.out.println(str);
-
-				this.status = this.can.Write(this.handle, this.msg);
-				
-				if(this.status != TPCANStatus.PCAN_ERROR_OK){
-					System.out.println("Unable to write the CAN message");
-					System.exit(0);
-				}
-			}
-		}
-	}
-	
 	public boolean write(int id, byte length, byte type, byte[] data){
 		this.msg.setID(id);
 		this.msg.setLength(length);
