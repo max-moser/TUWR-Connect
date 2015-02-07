@@ -43,15 +43,16 @@ public class CommandToCAN {
 			// assumption:
 			// each parameter's area [the "affected" bits] are pairwise disjoint
 			
-			int offset, length, fixpoint, bytenofrom, bitnofrom, bytenoto;
+			int offset, length, fixpoint, bytenofrom, bitnofrom, bytenoto, bytelen;
 			int bitsleft, bitsright, ind;
 			byte[] value;
-			byte tmp;
+			byte tmp, mask;
 			
 			offset = p.getOffset();
 			length = p.getLength();
 			fixpoint = p.getFixpoint();
 			value = p.getValue().getFormatted(fixpoint, length); // the FP
+			bytelen = ((offset + length - 1) / CommandToCAN.bpb) - (offset / CommandToCAN.bpb);
 			// assumption:
 			// the superfluous bits in the value bytes are filled with 0
 			// e.g. if the bit length of the value is 13, the bytes look like this:
@@ -59,7 +60,7 @@ public class CommandToCAN {
 			
 			bytenofrom = offset / CommandToCAN.bpb; // the index of the starting byte (ranging from 0 to 7)
 			bitnofrom = offset % CommandToCAN.bpb; // the index of the starting bit in the starting byte (0 = highest value, 7 = least value)
-			bytenoto = (offset + length - 1) / CommandToCAN.bpb; // the index of the ending byte (should be greater or equal to the starting byte)
+			bytenoto = bytenofrom + bytelen; // the index of the ending byte (should be greater or equal to the starting byte)
 			
 			bitsright = bitnofrom; // the amount of bits to shift FP[i] to the right
 			bitsleft = CommandToCAN.bpb - bitsright; // the amount of bits to shift FP[i-1] to the left
@@ -69,21 +70,29 @@ public class CommandToCAN {
 			for(int b = bytenofrom; b <= bytenoto; b++){
 				ind = b - bytenofrom; // the index of the byte from the FP
 				tmp = 0;
+				mask = 0x1;
+				for(int i=1; i<bitsleft; i++){
+					mask <<= 1;
+					mask = (byte)(mask | 0x1);
+				}
 				
 				if(ind == 0){
 					
 					tmp = value[0];
 					tmp >>= bitsright;
+					tmp = (byte)(tmp & mask);
 					ret[b] = (byte)(ret[b] | tmp);
 					
 				}else{
 					
 					tmp = value[ind - 1];
 					tmp <<= bitsleft;
+					tmp = (byte)(tmp & mask);
 					ret[b] = (byte)(ret[b] | tmp);
 					
 					tmp = value[ind];
 					tmp >>= bitsright;
+					tmp = (byte)(tmp & mask);
 					ret[b] = (byte)(ret[b] | tmp);
 					
 				}
@@ -111,25 +120,30 @@ public class CommandToCAN {
 	 */
 	private static byte[] calcChecksum(byte[] b){
 		byte[] csum = new byte[2];
+		byte mask = 0x1;
+		for(int i=1; i<8; i++){
+			mask <<= 1;
+			mask = (byte)(mask | 0x1);
+		}
 		
-		csum[0] = (byte)0b0000_0000;
-		csum[1] = (byte)0b0000_0000;
+		csum[0] = (byte)0b1111_1111;
+		csum[1] = (byte)0b1111_0000;
 		
 		int cnt = 0;
-		byte tmp = (byte)0b1000_0000;
+		byte tmp = (byte)0b0000_0001;
 		
 		for(int i=0; i<b.length; i++){
-			tmp = (byte)0b1000_0000;
-			for(int j=0; j<8; j++){
-				if((tmp & b[i]) > 0){
+			tmp = (byte)0b0000_0001;
+			for(int j=1; j<8; j++){
+				if((tmp & b[i]) != 0){
 					cnt ++;
 				}
-				tmp >>= 1;
+				tmp <<= 1;
 			}
 		}
 		
-		csum[1] = (byte)cnt;
-		csum[0] = (byte)(cnt >> 8);
+		csum[1] = (byte)((cnt << 4) & mask);
+		csum[0] = (byte)((cnt >> 4) & mask);
 		
 		return csum;
 	}

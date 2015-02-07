@@ -78,7 +78,7 @@ public class Parameter {
 		buf.append("\"" + this.name + "\": ");
 		buf.append("O:" + this.offset + ", ");
 		buf.append("L:" + this.length + ", ");
-		buf.append("F" + this.fixpoint + ", ");
+		buf.append("F:" + this.fixpoint + ", ");
 		buf.append("D:" + this.defaultValue + ", ");
 		buf.append("V:" + this.value);
 		

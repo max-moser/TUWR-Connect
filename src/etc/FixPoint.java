@@ -28,7 +28,7 @@ public class FixPoint {
 		int preDecimalLength, postDecimalLength, padding, len, bpb;
 		byte[] result;
 		boolean[] exps;
-		
+
 		boolean fixpointWork = (fixpoint >= 0);
 
 		bpb = Byte.SIZE; // bpb: bits per byte (should be 8)
@@ -38,12 +38,12 @@ public class FixPoint {
 			result[i] = 0;
 		}
 		padding = (len * bpb) - length;
-		
+
 		// initialisations in case that fixpoint == -1
 		preDecimalLength = length;
 		postDecimalLength = 0;
 		exps = new boolean[postDecimalLength]; // dummy init.
-		
+
 		if(fixpointWork){
 			preDecimalLength = fixpoint;
 			postDecimalLength = length - preDecimalLength;
@@ -82,10 +82,16 @@ public class FixPoint {
 				postDec = postDec | 0x1;
 			}
 		}
-		
+
 		// taking padding on the right into account
-		for(int i=0; i<padding; i++){
-			postDec <<= 1;
+		if(fixpointWork){
+			for(int i=0; i<padding; i++){
+				postDec <<= 1;
+			}
+		}else{
+			for(int i=0; i<padding; i++){
+				preDec <<= 1;
+			}
 		}
 
 		// creating the final result

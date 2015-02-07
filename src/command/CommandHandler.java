@@ -47,10 +47,21 @@ public class CommandHandler extends XMLHandler {
 			int offset = -1, length = -1, fixpoint = -1;
 			FixPoint defaultVal = new FixPoint("0.0");
 			
-			pname = atts.getValue("name");
-			offset = Integer.parseInt(atts.getValue("offset"));
-			length = Integer.parseInt(atts.getValue("length"));
-			fixpoint = Integer.parseInt(atts.getValue("fixpoint"));
+			if(atts.getValue("name") != null){
+				pname = atts.getValue("name");
+			}
+			if(atts.getValue("offset") != null){
+				offset = Integer.parseInt(atts.getValue("offset"));
+			}
+			if(atts.getValue("length") != null){
+				length = Integer.parseInt(atts.getValue("length"));
+			}
+			if(atts.getValue("fixpoint") != null){
+				fixpoint = Integer.parseInt(atts.getValue("fixpoint"));
+			}
+			if(atts.getValue("default") != null){
+				defaultVal = new FixPoint(atts.getValue("default"));
+			}
 			
 			Parameter p = new Parameter(pname, offset, length, fixpoint, defaultVal);
 			this.paramList.add(p);
