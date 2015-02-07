@@ -13,6 +13,8 @@ public class FixPoint {
 	/**
 	 * TODO description
 	 * 
+	 * The bits in the last byte will be left-aligned, with zeroes as padding to the right
+	 * 
 	 * The following 
 	 * length > 0
 	 * length >= fixpoint
@@ -23,7 +25,7 @@ public class FixPoint {
 	public byte[] getFormatted(int fixpoint, int length){
 		double dblVal, exp, tmpRes;
 		long preDec, postDec;
-		int preDecimalLength, postDecimalLength, len, bpb;
+		int preDecimalLength, postDecimalLength, padding, len, bpb;
 		byte[] result;
 		boolean[] exps;
 		
@@ -35,6 +37,7 @@ public class FixPoint {
 		for(int i=0; i<result.length; i++){
 			result[i] = 0;
 		}
+		padding = (len * bpb) - length;
 		
 		// initialisations in case that fixpoint == -1
 		preDecimalLength = length;
@@ -79,6 +82,11 @@ public class FixPoint {
 				postDec = postDec | 0x1;
 			}
 		}
+		
+		// taking padding on the right into account
+		for(int i=0; i<padding; i++){
+			postDec <<= 1;
+		}
 
 		// creating the final result
 		// fixpointbyte: the byte in which the fixpoint is
@@ -94,7 +102,6 @@ public class FixPoint {
 			trimbyte <<= 1;
 			trimbyte = (byte)(trimbyte | 1);
 		}
-
 
 		fixpointbyte = (len - 1);
 		fixinbytepre = bpb;

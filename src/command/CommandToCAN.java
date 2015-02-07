@@ -2,8 +2,17 @@ package command;
 
 import java.util.List;
 
+/**
+ * TODO descr
+ * 
+ * @author Maxmanski
+ *
+ */
 public class CommandToCAN {
 
+	private static final int bpb = Byte.SIZE;
+	private static final int canmsglen = 8;
+	
 	/**
 	 * Extracts the command's CAN ID
 	 * 
@@ -22,9 +31,9 @@ public class CommandToCAN {
 	 * @return A Byte array of length 8
 	 */
 	public static byte[] getData(Command c){
-		byte[] ret = new byte[8];
+		byte[] ret = new byte[CommandToCAN.canmsglen];
 		
-		for(int i=0; i<8; i++){
+		for(int i=0; i<CommandToCAN.canmsglen; i++){
 			ret[i] = 0;
 		}
 		
@@ -48,12 +57,12 @@ public class CommandToCAN {
 			// e.g. if the bit length of the value is 13, the bytes look like this:
 			// [XXXX XXXX][XXXX X000]
 			
-			bytenofrom = offset / 8; // the index of the starting byte (ranging from 0 to 7)
-			bitnofrom = offset % 8; // the index of the starting bit in the starting byte (0 = highest value, 7 = least value)
-			bytenoto = (offset + length - 1) / 8; // the index of the ending byte (should be greater or equal to the starting byte)
+			bytenofrom = offset / CommandToCAN.bpb; // the index of the starting byte (ranging from 0 to 7)
+			bitnofrom = offset % CommandToCAN.bpb; // the index of the starting bit in the starting byte (0 = highest value, 7 = least value)
+			bytenoto = (offset + length - 1) / CommandToCAN.bpb; // the index of the ending byte (should be greater or equal to the starting byte)
 			
 			bitsright = bitnofrom; // the amount of bits to shift FP[i] to the right
-			bitsleft = 8 - bitsright; // the amount of bits to shift FP[i-1] to the left
+			bitsleft = CommandToCAN.bpb - bitsright; // the amount of bits to shift FP[i-1] to the left
 			
 			// for a bit understanding, have a look at the draft that i made
 			// TODO scan draft & save it in src folder
