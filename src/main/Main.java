@@ -49,6 +49,7 @@ public class Main {
 						System.out.println("modl: " + BinaryToString.bytesToString(c.getParameter("modl").getValue().getFormatted(-1, 1)));
 						System.out.println("modr: " + BinaryToString.bytesToString(c.getParameter("modr").getValue().getFormatted(-1, 1)));
 						System.out.println("data: " + BinaryToString.bytesToString(data));
+						System.out.println("left: " + BinaryToString.bytesToString(c.getParameter("left").getValue().getFormatted(6, 16)));
 						
 //			FixPoint fp = new FixPoint("255.75");
 //			System.out.println("fp: " + BinaryToString.bytesToString(fp.getFormatted(10, 16)));

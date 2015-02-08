@@ -2,6 +2,8 @@ package command;
 
 import java.util.List;
 
+import etc.BinaryToString;
+
 /**
  * TODO descr
  * 
@@ -46,7 +48,7 @@ public class CommandToCAN {
 			int offset, length, fixpoint, bytenofrom, bitnofrom, bytenoto, bytelen;
 			int bitsleft, bitsright, ind;
 			byte[] value;
-			byte tmp, mask;
+			byte tmp, maskl, maskr; // maskl: mask for the bits on the left side of the byte; maskr analogous
 			
 			offset = p.getOffset();
 			length = p.getLength();
@@ -65,36 +67,46 @@ public class CommandToCAN {
 			bitsright = bitnofrom; // the amount of bits to shift FP[i] to the right
 			bitsleft = CommandToCAN.bpb - bitsright; // the amount of bits to shift FP[i-1] to the left
 			
+			// initialising masks
+			maskl = 0x1;
+			maskr = 0x1;
+			for(int i=1; i<bitsright; i++){
+				maskl <<= 1;
+				maskl = (byte)(maskl | 0x1);
+			}
+			for(int i=1; i<bitsleft; i++){
+				maskr <<= 1;
+				maskr = (byte)(maskr | 0x1);
+				maskl <<= 1;
+			}
+			maskl <<= 1; // because the loop was 1 time too little
+			
 			// for a bit understanding, have a look at the draft that i made
 			// TODO scan draft & save it in src folder
 			for(int b = bytenofrom; b <= bytenoto; b++){
 				ind = b - bytenofrom; // the index of the byte from the FP
 				tmp = 0;
-				mask = 0x1;
-				for(int i=1; i<bitsleft; i++){
-					mask <<= 1;
-					mask = (byte)(mask | 0x1);
-				}
 				
 				if(ind == 0){
 					
 					tmp = value[0];
 					tmp >>= bitsright;
-					tmp = (byte)(tmp & mask);
+					tmp = (byte)(tmp & maskr);
 					ret[b] = (byte)(ret[b] | tmp);
 					
 				}else{
 					
 					tmp = value[ind - 1];
 					tmp <<= bitsleft;
-					tmp = (byte)(tmp & mask);
+					tmp = (byte)(tmp & maskl);
 					ret[b] = (byte)(ret[b] | tmp);
 					
-					tmp = value[ind];
-					tmp >>= bitsright;
-					tmp = (byte)(tmp & mask);
-					ret[b] = (byte)(ret[b] | tmp);
-					
+					if(ind < value.length){
+						tmp = value[ind];
+						tmp >>= bitsright;
+						tmp = (byte)(tmp & maskr);
+						ret[b] = (byte)(ret[b] | tmp);
+					}
 				}
 			}
 		}
