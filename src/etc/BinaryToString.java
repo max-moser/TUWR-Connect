@@ -1,17 +1,15 @@
 package etc;
 
 /**
- * 
  * A class for the proper representation of numeric integral values as binary Strings with leading zeroes.
  * 
  * @author Maxmanski
+ * @version 1.0
  *
  */
 public class BinaryToString {
 
-	/**
-	 * Bits per Byte. Should be 8. Just in case.
-	 */
+	// Bits per Byte. Should be 8. Just in case.
 	private static final int bpb = Byte.SIZE;
 	
 	/**
@@ -158,6 +156,7 @@ public class BinaryToString {
 		}
 		// end of handling for negative values
 		
+		// actual translation
 		while(tmpVal != 0){
 			if((tmpVal & 0x1) == 0){
 				str += "0";
@@ -167,7 +166,7 @@ public class BinaryToString {
 			tmpVal >>= 1;
 		}
 		
-		
+		// bringing the stuff in the correct order and appending zeroes
 		str = new StringBuilder(str).reverse().toString();
 		
 		stop = ((bytes * BinaryToString.bpb) - str.length());

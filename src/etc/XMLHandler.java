@@ -4,6 +4,16 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXParseException;
 import org.xml.sax.helpers.DefaultHandler;
 
+/**
+ * A template for the XMLHandlers in this project, such as the CommandHandler.
+ * 
+ * Outside of listing the most likely needed methods-to-override, a default implementation for
+ * error handling is defined as well.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public abstract class XMLHandler extends DefaultHandler{
 
 	@Override
@@ -45,11 +55,13 @@ public abstract class XMLHandler extends DefaultHandler{
 	}
 	
 	/**
-	 * TODO
-	 * @return
+	 * This method will return the result of the parsing process.
+	 * 
+	 * This method will only return sensitive data when called after the corresponding XMLParser's 
+	 * parse() method.
+	 * 
+	 * @return The result of the parsing process.
 	 */
-	public Object getResult(){
-		return new Integer(1337);
-	}
+	public abstract Object getResult();
 	
 }

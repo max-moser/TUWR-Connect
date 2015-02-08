@@ -12,6 +12,19 @@ import peak.can.basic.PeakCanHandler;
 import etc.FixPoint;
 import etc.XMLParser;
 
+/**
+ * The main hub for sending and receiving commands and notifications over CAN.
+ * 
+ * Sending commands:
+ * TODO
+ * 
+ * Receiving notifications:
+ * TODO
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class CommandCenter {
 
 	// predefined IDs, according to the TUWR Intranet
@@ -26,6 +39,9 @@ public class CommandCenter {
 	 * Creates a new CommandCenter with the specified CanHandler.
 	 * The CommandCenter uses the CanHandler to write Data to the CAN bus.
 	 * 
+	 * On creation, all of the commands contained in the file "command.xml"
+	 * will be parsed and stored as template commands.
+	 * 
 	 * @param canHandler
 	 * @throws ParserConfigurationException 
 	 * @throws SAXException 
@@ -34,7 +50,7 @@ public class CommandCenter {
 	public CommandCenter(PeakCanHandler canHandler) throws IOException, SAXException, ParserConfigurationException{
 		CommandHandler c = new CommandHandler();
 		
-		new XMLParser(c).parse("command.xml");
+		new XMLParser(c).parse("command.xml"); // TODO absolute install path
 		this.commands = c.getResult();
 		
 		this.rotMode = new RotationMode(canHandler);

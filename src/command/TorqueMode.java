@@ -5,6 +5,15 @@ import java.util.List;
 
 import peak.can.basic.PeakCanHandler;
 
+/**
+ * The Torque mode.
+ * It will validate commands-to-be-sent against compliance with the torque mode
+ * (valid ID and valid parameters) before sending them over CAN.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class TorqueMode implements Mode {
 
 	private PeakCanHandler canHandler;

@@ -5,10 +5,19 @@ import java.util.List;
 
 import peak.can.basic.PeakCanHandler;
 
+/**
+ * The Rotation mode.
+ * It will validate commands-to-be-sent against compliance with the rotational mode
+ * (valid ID and valid parameters) before sending them over CAN.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class RotationMode implements Mode{
 
 	private PeakCanHandler canHandler;
-	private List<Integer> validIDs;
+	private final List<Integer> validIDs;
 	
 	public RotationMode(PeakCanHandler canHandler){
 		this.canHandler = canHandler;

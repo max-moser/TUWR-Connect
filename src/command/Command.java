@@ -5,6 +5,23 @@ import java.util.List;
 
 import etc.FixPoint;
 
+/**
+ * The internal representation of a Command.
+ * It has the following properties:
+ * - Name: The alphanumeric name of the command
+ * - ID: The Command's CAN ID
+ * - Parameters: A list of parameters, such as Offset, Length, ...
+ * 
+ * It features a method with which the values of its parameters can be changed.
+ * Also, it features a copy constructor.
+ * 
+ * Thus, it is possible to create a set of template Commands which can be cloned
+ * once necessary and the clone's parameters can be adjusted as needed.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class Command {
 
 	private final String cmdName;
@@ -33,8 +50,8 @@ public class Command {
 	/**
 	 * Returns the command's parameter, identified by name
 	 * 
-	 * @param name
-	 * @return
+	 * @param name The name of the desired parameter
+	 * @return Either an instance of a parameter or NULL, if no parameter with the specified name exists for the command
 	 */
 	public Parameter getParameter(String name){
 		for(Parameter p: this.params){

@@ -1,4 +1,4 @@
-<!ELEMENT out (command*)>
+<!ELEMENT commands (command*)>
 
 <!ELEMENT command (param*)>
 	<!ATTLIST command name ID #REQUIRED>

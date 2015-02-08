@@ -2,6 +2,13 @@ package etc;
 
 import java.math.BigDecimal;
 
+/**
+ * A storage class for fixed point values, as opposed to the primitive floating point values.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class FixPoint {
 
 	private final BigDecimal number;
@@ -11,16 +18,35 @@ public class FixPoint {
 	}
 
 	/**
-	 * TODO description
+	 * Returns an array of bytes containing the stored fixed-point value with the specified formatting
+	 * and as close an approximation of the fractional value as possible with the specified amount
+	 * of bits.
 	 * 
-	 * The bits in the last byte will be left-aligned, with zeroes as padding to the right
+	 * Each byte will contain a portion of the value, with the highest-value bit in the first byte
+	 * having the overall highest value and the lowest-value bit in the last byte having the overall
+	 * lowest value.
 	 * 
-	 * The following 
+	 * The fixpoint parameter determines the position where the fractional part should start.
+	 * E.g. a fixpoint of 2 will indidcate that there should be 2 bits for the integral part of the number
+	 * 	before the start of the fractional part.
+	 * 
+	 * The fixpoint parameter can also be set to -1, which will result in not calculating a fractional part
+	 * at all and instead returning an integer value with the specified amount of bits.
+	 * 
+	 * Hint:
+	 * If the length is not a multiple of the amount of bits in a byte (usually 8),
+	 * the bits in the last byte will be left-aligned, with zeroes as padding to the right.
+	 * 
+	 * The following inequations must be fulfilled in order for sensible results to emerge:
 	 * length > 0
 	 * length >= fixpoint
 	 * fixpoint >= 0 --OR-- fixpoint == -1, if disabled
 	 * 
-	 * @return
+	 * Warning:
+	 * The current implementation will not work for values consuming more bits than available in the
+	 * primitive long datatype.
+	 * 
+	 * @return An array of bytes, containing the fixed-point value with the specified formatting.
 	 */
 	public byte[] getFormatted(int fixpoint, int length){
 		double dblVal, exp, tmpRes;

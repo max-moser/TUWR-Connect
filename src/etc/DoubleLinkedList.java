@@ -1,11 +1,14 @@
 package etc;
 
+// TODO: derive a List which is always sorted. ..?
 /**
- * TODO: derive a List which is always sorted.
+ * An implementation of a Double Linked List, specifically designed
+ * to meet the needs of the data package.
  * 
  * @author Maxmanski
+ * @version 1.0
  *
- * @param <A>
+ * @param <A> The type of objects to be contained in the List.
  */
 public class DoubleLinkedList<A> {
 

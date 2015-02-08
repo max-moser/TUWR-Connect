@@ -10,6 +10,15 @@ import javax.xml.parsers.SAXParserFactory;
 import org.xml.sax.SAXException;
 import org.xml.sax.XMLReader;
 
+/**
+ * The XML Parser, ready for use with any project-specific implementation of the XML Handler.
+ * 
+ * It is configured to validate the XML file against a specified DTD.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class XMLParser{
 
 	private final XMLReader xmlReader;
@@ -27,7 +36,11 @@ public class XMLParser{
 	}
 	
 	/**
-	 * TODO write fancy description about parsing
+	 * Initiates the parsing process of the specified XML file.
+	 * The XML file's syntax will be checked against validity and its layout will be checked
+	 * against the corresponding DTD (which needs to be specified inside the XML file).
+	 * 
+	 * After the parsing process is completed, the result is returned.
 	 * 
 	 * Warning: filename should be an absolute path!
 	 * Otherwise, the working directory will be used

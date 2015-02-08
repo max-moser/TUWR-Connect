@@ -2,12 +2,11 @@ package command;
 
 import java.util.List;
 
-import etc.BinaryToString;
-
 /**
- * TODO descr
+ * A class with static methods for converting Commands into CAN messages (an array of bytes with a fixed length).
  * 
  * @author Maxmanski
+ * @version 1.0
  *
  */
 public class CommandToCAN {

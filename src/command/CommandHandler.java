@@ -8,6 +8,16 @@ import org.xml.sax.Attributes;
 import etc.FixPoint;
 import etc.XMLHandler;
 
+/**
+ * A SAX Parser (see Java documentation/tutorials), specifically for an XML file
+ * following the "command.dtd".
+ * 
+ * It is used for parsing commands and their respective parameters from the XML file.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public class CommandHandler extends XMLHandler {
 
 	private List<Command> commandList;

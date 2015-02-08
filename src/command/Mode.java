@@ -2,6 +2,16 @@ package command;
 
 import peak.can.basic.PeakCanHandler;
 
+/**
+ * A template for the modes used in the CommandCenter.
+ * 
+ * Each mode must have a PeakCanHandler, in order to send data over CAN.
+ * The mode's purpose is to validate data and subsequently send it over CAN.
+ * 
+ * @author Maxmanski
+ * @version 1.0
+ *
+ */
 public interface Mode {
 
 	/**
