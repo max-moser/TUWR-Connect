@@ -182,6 +182,19 @@ public class FixPoint {
 		return result;
 	}
 
+	@Override
+	public boolean equals(Object other){
+		if(other == null){
+			return false;
+		}else if(other.getClass() != this.getClass()){
+			return false;
+		}
+		
+		FixPoint o = (FixPoint) other;
+		
+		return this.number.equals(o.number);
+	}
+	
 	public String toString(){
 		StringBuffer buf = new StringBuffer();
 

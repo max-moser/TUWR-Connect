@@ -41,7 +41,7 @@ public class StopMotor {
 				params.put("right", new FixPoint(String.valueOf(torque)));
 				
 			}
-			CommandProxy.getInstance().executeCommand("stop", params);
+			CommandProxy.getInstance().sendCommand("stop", params);
 			try {
 				Thread.sleep(100);
 			} catch (InterruptedException e) {

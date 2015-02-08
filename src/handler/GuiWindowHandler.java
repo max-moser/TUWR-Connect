@@ -47,7 +47,7 @@ public class GuiWindowHandler implements WindowListener {
 			}
 			
 		}
-		CommandProxy.getInstance().executeCommand("stop", null);
+		CommandProxy.getInstance().sendCommand("stop", null);
 		try {
 			Thread.sleep(100);
 		} catch (InterruptedException e) {

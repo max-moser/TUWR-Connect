@@ -9,6 +9,8 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import peak.can.basic.PeakCanHandler;
+import etc.CANObservable;
+import etc.CANObserver;
 import etc.FixPoint;
 import etc.XMLParser;
 
@@ -22,10 +24,10 @@ import etc.XMLParser;
  * TODO
  * 
  * @author Maxmanski
- * @version 1.0
+ * @version 1.1
  *
  */
-public class CommandCenter {
+public class CommandCenter implements CANObservable{
 
 	// predefined IDs, according to the TUWR Intranet
 	public final static int ROTATION_MODE = 1, TORQUE_MODE = 0;
@@ -34,6 +36,7 @@ public class CommandCenter {
 	private final RotationMode rotMode;
 	private final TorqueMode torMode;
 	private final List<Command> commands;
+	private final MessageListener listen;
 	
 	/**
 	 * Creates a new CommandCenter with the specified CanHandler.
@@ -49,9 +52,9 @@ public class CommandCenter {
 	 */
 	public CommandCenter(PeakCanHandler canHandler) throws IOException, SAXException, ParserConfigurationException{
 		CommandHandler c = new CommandHandler();
-		
 		new XMLParser(c).parse("command.xml"); // TODO absolute install path
 		this.commands = c.getResult();
+		this.listen = new MessageListener(canHandler);
 		
 		this.rotMode = new RotationMode(canHandler);
 		this.torMode = new TorqueMode(canHandler);
@@ -67,7 +70,7 @@ public class CommandCenter {
 	 * @param params A HashMap containing the parameter names as keys and the corresponding values as... values
 	 * @return
 	 */
-	public boolean executeCommand(String cmd, HashMap<String, FixPoint> params){
+	public boolean sendCommand(String cmd, HashMap<String, FixPoint> params){
 		// look for the command
 		Command command = null;
 		for(Command c: this.commands){
@@ -94,35 +97,29 @@ public class CommandCenter {
 			}
 		}
 		
-		// convert the command to CAN
-		// and execute it
-		byte id = CommandToCAN.getID(exec);
-		byte[] data = CommandToCAN.getData(exec);
-		
-		return this.sendData(id, data);
+		return this.activeMode.sendCommand(exec);
 	}
 	
 	/**
-	 * TODO
-	 * @param id
-	 * @param data
-	 * @return
+	 * Sends the specified data without any performing any validation first.
+	 * 
+	 * @param id The ID for the CAN message to send
+	 * @param data The data of the CAN message to send
+	 * @return TRUE, if the transmission was successful, FALSE otherwise
 	 */
 	public boolean sendData(byte id, byte[] data){
-		
-		if(activeMode != rotMode && activeMode != torMode){
-			assert(false);
-			return false;
-		}
-		
-		// the active Mode will check against validity of ID and data
 		return activeMode.sendData(id, data);
 	}
 	
 	/**
-	 * TODO
+	 * Changes the active mode of the Command Center to either the Rotation Mode or Torque Mode,
+	 * depending on the specified parameter.
+	 * 
+	 * If the specified parameter is neither CommandCenter.ROTATION_MODE or CommandCenter.TORQUE_MODE,
+	 * FALSE will be returned.
+	 * 
 	 * @param mode One of the constants CommandCenter.ROTATION_MODE or CommandCenter.TORQUE_MODE
-	 * @return
+	 * @return TRUE, if the switch was successful, FALSE otherwise
 	 */
 	public boolean changeMode(int mode){
 		if(mode == CommandCenter.TORQUE_MODE){
@@ -134,6 +131,22 @@ public class CommandCenter {
 		}else{
 			return false;
 		}
+	}
+	
+	public void setCANHandler(PeakCanHandler handle){
+		this.rotMode.setCANHandler(handle);
+		this.torMode.setCANHandler(handle);
+		this.listen.setCANHandler(handle);
+	}
+	
+	@Override
+	public void registerObserver(CANObserver o) {
+		this.listen.registerObserver(o);
+	}
+
+	@Override
+	public void unregisterObserver(CANObserver o) {
+		this.listen.unregisterObserver(o);
 	}
 	
 }

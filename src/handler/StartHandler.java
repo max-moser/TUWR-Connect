@@ -37,7 +37,7 @@ public class StartHandler implements ActionListener {
 		case 0:
 			HashMap<String,FixPoint> param = new HashMap<String,FixPoint>();
 			param.put("left", new FixPoint("1"));
-			CommandProxy.getInstance().executeCommand("start", param);
+			CommandProxy.getInstance().sendCommand("start", param);
 			break;
 		case 1:
 			new StopMotor(gui).stopMotor(true);

@@ -61,7 +61,7 @@ public class CommandProxy {
 	 * @param params A HashMap containing the parameter names as keys and the corresponding values as... values
 	 * @return
 	 */
-	public boolean executeCommand(String cmd, HashMap<String, FixPoint> params){
+	public boolean sendCommand(String cmd, HashMap<String, FixPoint> params){
 		if(cmd == null){
 			cmd = "";
 		}
@@ -69,7 +69,7 @@ public class CommandProxy {
 			params = new HashMap<String,FixPoint>();
 		}
 		
-		return center.executeCommand(cmd, params);
+		return center.sendCommand(cmd, params);
 	}
 
 }

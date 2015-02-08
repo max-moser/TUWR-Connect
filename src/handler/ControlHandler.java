@@ -62,7 +62,7 @@ public class ControlHandler implements ActionListener {
 			
 			params.put("right", new FixPoint(String.valueOf(info2.value())));
 			
-			CommandProxy.getInstance().executeCommand("control", params);
+			CommandProxy.getInstance().sendCommand("control", params);
 			
 		}
 
