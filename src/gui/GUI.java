@@ -3,7 +3,10 @@ package gui;
 import handler.*;
 
 import java.io.File;
+import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Map.Entry;
 
 import javax.swing.ImageIcon;
 
@@ -29,11 +32,16 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 	 */
 	private static final long serialVersionUID = 01012015610L;
 	
+	private HashMap<String,List<String>> fncts; // mapping of all functions
+												// <fnct-name, params>
+	
 	/**
      * Creates new form GUI
      * The form GUI is the default JFrame for the Program TUWR-Connect
      */
-    public GUI() {
+    public GUI(HashMap<String,List<String>> functions) { 
+    	
+    	this.fncts = functions; // map all the wanted functions
     	
     	/* Set the Nimbus look and feel */
         try {
@@ -56,7 +64,14 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         /* Set information about this frame */
     	this.setTitle("TUWR-Connect");
     	String path = new File("").getAbsolutePath();
-		this.setIconImage(new ImageIcon(path+"\\"+"resources"+"\\"+"icon.png").getImage());
+    	//System.out.println(System.getProperties());
+		if(System.getProperty("os.name").contains("Windows") ||
+				System.getProperty("os.name").contains("Microsoft")){
+			this.setIconImage(new ImageIcon(path+"\\"+"resources"+"\\"+"icon.png").getImage());
+		}else{
+			this.setIconImage(new ImageIcon(path+"/resources/icon.png").getImage());
+		}
+    	
     	
 		/* set component information */
         initComponents();
@@ -67,6 +82,20 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
         this.addWindowListener(new GuiWindowHandler(this));
         
+        /* create function-tab */
+        String[] comm = new String[fncts.size()];
+        Iterator<String> keys = fncts.keySet().iterator();
+        for( int i=0; i<fncts.size(); i++ ){
+        	comm[i] = keys.next();
+        }
+        fnct_list = new javax.swing.JList<String>(comm);
+        functiontab.add(fnct_list);
+        fnct_list.setVisible(true);
+        fnct_list_r = new javax.swing.JList<String>(comm);
+        functiontab1.add(fnct_list_r);
+        fnct_list.setVisible(true);
+        //TODO einrichten des funktionen tabs
+        
         /* set component listener */
         ct_torque_radio.addActionListener(new ControlRadioButtonHandler(this));
         ct_torque_radio_r.addActionListener(new Control_R_RadioButtonHandler(this));
@@ -75,7 +104,13 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         expand.addActionListener(new ExpandHandler(this));
         runbutton.addActionListener(new StartHandler(this));
         runbutton_r.addActionListener(new Start_R_Handler(this));
+        fnct_list.addListSelectionListener(new FunctionHandler(this));
+        fnct_list_r.addListSelectionListener(new Function_R_Handler(this));
         
+        /* set enter function for frame */
+        //NOTE: experimental code
+        control_accept.addActionListener(new ControlHandler(this));
+        this.getRootPane().setDefaultButton(control_accept);
         
         // request focus
         this.requestFocus();
@@ -628,6 +663,9 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         console_r.setEditable(false);
         errors.setEditable(false);
         errors_r.setEditable(false);
+        
+        control_accept = new javax.swing.JButton();
+        control_accept.setVisible(false);
 
         pack();
     }// </editor-fold>                                                                         
@@ -761,6 +799,42 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     		runbutton_r.setText("Start");
     	}
     	
+    	return ret;
+    }
+    
+    /**
+     * Returns the currently selected function of the LEFT function-tab.
+     * The parameter count of this function could be zero.
+     * The returned HashMap always only contains one item.
+     * 
+     * @return selected function
+     */
+    public HashMap<String,List<String>> getSelectedFunction(){
+    	HashMap<String,List<String>> ret = new HashMap<String,List<String>>();
+    	for(Entry<String, List<String>> entry : fncts.entrySet()){
+    		if(entry.getKey().equals(fnct_list.getSelectedValue())){
+    			ret.put(entry.getKey(), entry.getValue());
+    			break; // only one selection
+    		}
+    	}
+    	return ret;
+    }
+    
+    /**
+     * Returns the currently selected function of the RIGHT function-tab.
+     * The parameter count of this function could be zero.
+     * The returned HashMap always only contains one item.
+     * 
+     * @return selected function
+     */
+    public HashMap<String,List<String>> getSelectedFunctionRight(){
+    	HashMap<String,List<String>> ret = new HashMap<String,List<String>>();
+    	for(Entry<String, List<String>> entry : fncts.entrySet()){
+    		if(entry.getKey().equals(fnct_list_r.getSelectedValue())){
+    			ret.put(entry.getKey(), entry.getValue());
+    			break; // only one selection
+    		}
+    	}
     	return ret;
     }
     
@@ -993,19 +1067,6 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 		
 		return new ControlInformation(modus,value,id);
 	}
-    
-    /**
-     * @param args the command line arguments
-     */
-    public static void main(String args[]) {
-
-        /* Create and display the form */
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new GUI().setVisible(true);
-            }
-        });
-    }
 
     // Variables declaration - do not modify                     
     private javax.swing.JTextArea console;
@@ -1067,5 +1128,8 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     private javax.swing.JLabel torque_nm_r;
     private javax.swing.JTextField torque_output;
     private javax.swing.JTextField torque_output_r;
+    private javax.swing.JList<String> fnct_list;
+    private javax.swing.JList<String> fnct_list_r;
+    private javax.swing.JButton control_accept;
     // End of variables declaration                   
 }

@@ -37,23 +37,27 @@ public class GuiWindowHandler implements WindowListener {
 	@Override
 	public void windowClosing(WindowEvent arg0) {
 		
-		if(!gui.allStopped()){
-			
-			if(gui.leftStarted()){
-				new StopMotor(gui).stopMotor(true);
+		try{
+			if(!gui.allStopped()){
+				
+				if(gui.leftStarted()){
+					new StopMotor(gui).stopMotor(true);
+				}
+				if(gui.rightStarted()){
+					new StopMotor(gui).stopMotor(true);
+				}
+				
 			}
-			if(gui.rightStarted()){
-				new StopMotor(gui).stopMotor(true);
-			}
-			
-		}
-		CommandProxy.getInstance().sendCommand("stop", null);
-		try {
+			CommandProxy.getInstance().sendCommand("stop", null);
 			Thread.sleep(100);
-		} catch (InterruptedException e) {
-			e.printStackTrace();
+			System.exit(1);
+		}catch(Exception e){
+			java.util.logging.Logger.getLogger(this.getClass().getName()).log(java.util.logging.Level.SEVERE, "Problem with closing the program! \n"+e.getMessage());
+			System.exit(-3);
+		}catch(java.lang.UnsatisfiedLinkError ule){
+			java.util.logging.Logger.getLogger(this.getClass().getName()).log(java.util.logging.Level.SEVERE, "Problem with closing the program! \n"+ule.getMessage());
+			System.exit(-3);
 		}
-		System.exit(1);
 
 	}
 
