@@ -1,8 +1,8 @@
-<!ELEMENT commands (command*)>
+<!ELEMENT messages (command*)>
 
-<!ELEMENT command (param*)>
-	<!ATTLIST command name ID #REQUIRED>
-	<!ATTLIST command id CDATA #REQUIRED>
+<!ELEMENT message (param*)>
+	<!ATTLIST message name ID #REQUIRED>
+	<!ATTLIST message id CDATA #REQUIRED>
 
 <!ELEMENT param EMPTY>
 	<!ATTLIST param name CDATA #REQUIRED>

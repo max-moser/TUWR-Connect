@@ -25,25 +25,25 @@ import etc.FixPoint;
 public class Message {
 
 	private final String msgName;
-	private final List<Parameter> params;
+	private final List<MessageParameter> params;
 	private final int id;
 	
 	// Copy Constructor
 	public Message(Message toClone){
 		this.msgName = toClone.msgName;
-		this.params = new ArrayList<Parameter>();
+		this.params = new ArrayList<MessageParameter>();
 		this.id = toClone.id;
-		for(Parameter p: toClone.params){
-			this.params.add(new Parameter(p));
+		for(MessageParameter mp: toClone.params){
+			this.params.add(new MessageParameter(mp));
 		}
 	}
 	
-	public Message(String name, int id, List<Parameter> parameters){
+	public Message(String name, int id, List<MessageParameter> parameters){
 		this.msgName = name;
-		this.params = new ArrayList<Parameter>();
+		this.params = new ArrayList<MessageParameter>();
 		this.id = id;
-		for(Parameter p: parameters){
-			this.params.add(new Parameter(p));
+		for(MessageParameter mp: parameters){
+			this.params.add(new MessageParameter(mp));
 		}
 	}
 	
@@ -53,10 +53,10 @@ public class Message {
 	 * @param name The name of the desired parameter
 	 * @return Either an instance of a parameter or NULL, if no parameter with the specified name exists for the command
 	 */
-	public Parameter getParameter(String name){
-		for(Parameter p: this.params){
-			if(p.getName().equals(name)){
-				return p;
+	public MessageParameter getParameter(String name){
+		for(MessageParameter mp: this.params){
+			if(mp.getName().equals(name)){
+				return mp;
 			}
 		}
 		return null;
@@ -95,7 +95,7 @@ public class Message {
 	 * 
 	 * @return A List containing all of the Message's Parameters
 	 */
-	public List<Parameter> getParameters(){
+	public List<MessageParameter> getParameters(){
 		return this.params;
 	}
 	
@@ -111,9 +111,9 @@ public class Message {
 	 * @param p The new parameter
 	 * @return TRUE if a parameter was found and replaced; FALSE if no parameter was replaced
 	 */
-	public boolean replaceParameter(Parameter p){
-		Parameter tmp = null;
-		for(Parameter param: this.params){
+	public boolean replaceParameter(MessageParameter p){
+		MessageParameter tmp = null;
+		for(MessageParameter param: this.params){
 			param.getName().equals(p.getName());
 			tmp = param;
 			break;
@@ -141,8 +141,8 @@ public class Message {
 	 * @return TRUE, if a parameter was found and overridden; FALSE otherwise
 	 */
 	public boolean replaceParameter(String name, FixPoint value){
-		Parameter tmp = null;
-		for(Parameter param: this.params){
+		MessageParameter tmp = null;
+		for(MessageParameter param: this.params){
 			if(param.getName().equals(name)){
 				tmp = param;
 				break;
@@ -162,8 +162,8 @@ public class Message {
 
 		buf.append("\"" + this.msgName + "\":");
 		buf.append(this.id + "\n");
-		for(Parameter p: this.params){
-			buf.append("\t" + p.toString() + "\n");
+		for(MessageParameter mp: this.params){
+			buf.append("\t" + mp.toString() + "\n");
 		}
 		
 		// delete last "\n"
