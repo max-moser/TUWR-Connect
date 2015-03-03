@@ -2,6 +2,8 @@ package gui;
 
 import java.util.List;
 
+import etc.CANObserver;
+
 /**
  * This interface describes a link between message from the CAN towards the output interface.
  * 
@@ -10,7 +12,7 @@ import java.util.List;
  *
  */
 
-public interface InformationHandler {
+public interface InformationHandler extends CANObserver {
 	
 	/**
 	 * Notifies the information handler about transpired errors. Each error is represented
@@ -51,6 +53,6 @@ public interface InformationHandler {
 	 * @param iq iq-current
 	 * @param left from the left motor?
 	 */
-	public void notityCurrent(double id, double iq, boolean left);
+	public void notifyCurrent(double id, double iq, boolean left);
 	
 }

@@ -910,7 +910,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 	}
 
 	@Override
-	public void notityCurrent(double id, double iq, boolean left) {
+	public void notifyCurrent(double id, double iq, boolean left) {
 		
 		if(left){
 			

@@ -1,0 +1,7 @@
+<!ELEMENT errors (error*)>
+
+<!ELEMENT error (param*)>
+	<!ATTLIST error name ID #REQUIRED>
+	<!ATTLIST error id CDATA #REQUIRED>
+	<!ATTLIST error message CDATA #REQUIRED>
+
