@@ -15,6 +15,7 @@ import javax.xml.parsers.ParserConfigurationException;
 import org.xml.sax.SAXException;
 
 import command.CommandHandler;
+import command.MessageHandler;
 import etc.XMLParser;
 import gui.GUI;
 
@@ -57,7 +58,19 @@ public class Main {
 			log.log(Level.SEVERE, "a problem with SAX has occured");
 			System.exit(-2);
 		} catch (IOException e) {
-			log.log(Level.SEVERE, "unable to open XML-File");
+			log.log(Level.SEVERE, "unable to open XML-File: command.xml");
+			System.exit(-1);
+		}
+		try{
+			xml = new XMLParser(new MessageHandler());
+			xml.parse("messages.xml");
+		} catch (ParserConfigurationException e) {
+			log.log(Level.WARNING, "XML-Parser configuration isn't ok");
+		} catch (SAXException e) {
+			log.log(Level.SEVERE, "a problem with SAX has occured");
+			System.exit(-2);
+		} catch (IOException e) {
+			log.log(Level.SEVERE, "unable to open XML-File: messages.xml");
 			System.exit(-1);
 		}
 		boolean exist = true;
