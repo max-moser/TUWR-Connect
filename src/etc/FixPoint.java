@@ -182,6 +182,15 @@ public class FixPoint {
 		return result;
 	}
 
+	// TODO
+	public static FixPoint createFixpoint(byte[] val, int fixpoint, int len){
+		throw new UnsupportedOperationException();
+	}
+	
+	public static FixPoint createFixpoint(long val, int fixpoint, int len){
+		return null;
+	}
+	
 	@Override
 	public boolean equals(Object other){
 		if(other == null){

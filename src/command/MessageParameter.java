@@ -1,5 +1,7 @@
 package command;
 
+import java.awt.TrayIcon.MessageType;
+
 import etc.FixPoint;
 
 /**
@@ -80,12 +82,16 @@ public class MessageParameter {
 		return ret;
 	}
 	
+	public MessageParameterType getType(){
+		return this.type;
+	}
+	
 	public int getFixpoint() {
-		return fixpoint;
+		return this.fixpoint;
 	}
 	
 	public int getLength() {
-		return length;
+		return this.length;
 	}
 	
 	public String getName(){
@@ -93,7 +99,7 @@ public class MessageParameter {
 	}
 
 	public int getOffset() {
-		return offset;
+		return this.offset;
 	}
 
 	public FixPoint getValue(){
