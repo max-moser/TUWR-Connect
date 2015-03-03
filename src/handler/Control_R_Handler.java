@@ -16,6 +16,7 @@ import command.CommandProxy;
  *
  */
 
+@Deprecated
 public class Control_R_Handler implements ActionListener {
 
 	private GUI gui;

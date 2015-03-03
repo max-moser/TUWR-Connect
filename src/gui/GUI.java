@@ -93,7 +93,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         fnct_list.setVisible(true);
         fnct_list_r = new javax.swing.JList<String>(comm);
         functiontab1.add(fnct_list_r);
-        fnct_list.setVisible(true);
+        fnct_list_r.setVisible(true);
         //TODO einrichten des funktionen tabs
         
         /* set component listener */
@@ -109,8 +109,11 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         
         /* set enter function for frame */
         //NOTE: experimental code
+        control_accept = new javax.swing.JButton();
+        this.add(control_accept);
         control_accept.addActionListener(new ControlHandler(this));
         this.getRootPane().setDefaultButton(control_accept);
+        //controltab.getRootPane().setDefaultButton(control_accept);
         
         // request focus
         this.requestFocus();
