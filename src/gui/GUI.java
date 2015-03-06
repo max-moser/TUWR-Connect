@@ -89,12 +89,11 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         	comm[i] = keys.next();
         }
         fnct_list = new javax.swing.JList<String>(comm);
-        functiontab.add(fnct_list);
         fnct_list.setVisible(true);
+        functiontab.setViewportView(fnct_list);
         fnct_list_r = new javax.swing.JList<String>(comm);
-        functiontab1.add(fnct_list_r);
         fnct_list_r.setVisible(true);
-        //TODO einrichten des funktionen tabs
+        functiontab1.setViewportView(fnct_list_r);
         
         /* set component listener */
         ct_torque_radio.addActionListener(new ControlRadioButtonHandler(this));
