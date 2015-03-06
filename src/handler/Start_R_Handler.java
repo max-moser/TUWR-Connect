@@ -10,9 +10,12 @@ import java.util.HashMap;
 import command.CommandProxy;
 
 /**
+ * VersionHistory: </br>
+ * V1.1: adapted new ID for right motor -> ID60
+ * 
  * 
  * @author Iorgreths
- * @version 1.0
+ * @version 1.1
  *
  */
 
@@ -40,7 +43,7 @@ public class Start_R_Handler implements ActionListener {
 		case 0:
 			HashMap<String,FixPoint> param = new HashMap<String,FixPoint>();
 			param.put("left", new FixPoint("1"));
-			CommandProxy.getInstance().sendCommand("start", param);
+			CommandProxy.getInstance().sendCommand("start_r", param);
 			break;
 		case 1:
 			new StopMotor(gui).stopMotor(false);
