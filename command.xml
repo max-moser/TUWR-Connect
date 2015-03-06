@@ -47,4 +47,5 @@
 		<param name="bp" offset="15" length="1" default="0" />
 		<param name="left" offset="32" length="16" fixpoint="6" />
 		<param name="right" offset="48" length="16" fixpoint="6" />
+	</command>
 </commands>

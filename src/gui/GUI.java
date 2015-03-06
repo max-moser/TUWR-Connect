@@ -76,7 +76,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 		/* set component information */
         initComponents();
         rightmotor.setVisible(false);
-        this.setSize(417, 396);
+        this.setSize(417, 422);
         this.setLocationRelativeTo(null);
         //NOTE: experimental-code
         this.setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);
@@ -106,6 +106,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         runbutton_r.addActionListener(new Start_R_Handler(this));
         fnct_list.addListSelectionListener(new FunctionHandler(this));
         fnct_list_r.addListSelectionListener(new Function_R_Handler(this));
+        baudchosser.addActionListener(new PropertyChangeHandler(this));
         
         /* set enter function for frame */
         //NOTE: experimental code
@@ -188,6 +189,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         console_r = new javax.swing.JTextArea();
         errors_scroll_r = new javax.swing.JScrollPane();
         errors_r = new javax.swing.JTextArea();
+        baudchosser = new javax.swing.JComboBox<String>();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setName("tuwr_gui"); // NOI18N
@@ -641,15 +643,20 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
                 .addContainerGap())
         );
 
+        baudchosser.setModel(new javax.swing.DefaultComboBoxModel<String>(new String[] { "1M", "800K", "500K", "250K", "125K", "100K", "95K", "83K", "50K", "47K", "33K", "20K", "10K", "5K" }));
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(leftmotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(rightmotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(leftmotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rightmotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(baudchosser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
@@ -659,8 +666,12 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(rightmotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(leftmotor, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(baudchosser, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap(39, Short.MAX_VALUE))
         );
+        
+        
         
         console.setEditable(false);
         console_r.setEditable(false);
@@ -727,7 +738,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
              * single-motor: [417,396]
              * double-motor: [824,396]
              */
-        	this.setSize(824, 396);
+        	this.setSize(824, 422);
         	rightmotor.setVisible(true);
         	expand.setVisible(false);
         	//this.setLocationRelativeTo(null);
@@ -1070,6 +1081,24 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 		
 		return new ControlInformation(modus,value,id);
 	}
+	
+	/**
+	 * Returns the currently selected baud-rate.
+	 * 
+	 * @return current baud-rate
+	 */
+	public String getBaudRate(){
+		return baudchosser.getItemAt(baudchosser.getSelectedIndex());
+	}
+	
+	/**
+	 * Sets whether the baud-rate is editable or not.
+	 * 
+	 * @param choosable editable rate?
+	 */
+	public void baudChoosable(boolean choosable){
+		baudchosser.setEnabled(choosable);
+	}
 
     // Variables declaration - do not modify                     
     private javax.swing.JTextArea console;
@@ -1134,5 +1163,6 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     private javax.swing.JList<String> fnct_list;
     private javax.swing.JList<String> fnct_list_r;
     private javax.swing.JButton control_accept;
+    private javax.swing.JComboBox<String> baudchosser;
     // End of variables declaration                   
 }

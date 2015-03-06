@@ -38,9 +38,13 @@ public class StartHandler implements ActionListener {
 			HashMap<String,FixPoint> param = new HashMap<String,FixPoint>();
 			param.put("left", new FixPoint("1"));
 			CommandProxy.getInstance().sendCommand("start", param);
+			gui.baudChoosable(false);
 			break;
 		case 1:
 			new StopMotor(gui).stopMotor(true);
+			if(gui.allStopped()){
+				gui.baudChoosable(true);
+			}
 			break;
 		default:
 			assert(false);
