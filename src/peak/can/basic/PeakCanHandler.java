@@ -1,5 +1,7 @@
 package peak.can.basic;
 
+import etc.CANMessage;
+
 
 public class PeakCanHandler {
 	
@@ -29,6 +31,12 @@ public class PeakCanHandler {
 		this.msg = new TPCANMsg();
 	}
 	
+	public CANMessage read(){
+		// TODO blocking or not?
+		this.can.Read(this.handle, this.msg, null);
+		return (new CANMessage(this.msg.getID(), this.msg.getData()));
+	}
+	
 	public boolean write(int id, byte length, byte type, byte[] data){
 		this.msg.setID(id);
 		this.msg.setLength(length);
@@ -37,5 +45,9 @@ public class PeakCanHandler {
 		
 		TPCANStatus status = this.can.Write(this.handle, this.msg);
 		return (status == TPCANStatus.PCAN_ERROR_OK);
+	}
+	
+	public void uninit(){
+		this.can.Uninitialize(this.handle);
 	}
 }

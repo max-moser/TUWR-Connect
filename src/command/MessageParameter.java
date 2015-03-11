@@ -1,7 +1,5 @@
 package command;
 
-import java.awt.TrayIcon.MessageType;
-
 import etc.FixPoint;
 
 /**

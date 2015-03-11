@@ -1,0 +1,4 @@
+<!DOCTYPE errors SYSTEM "errorcode.dtd">
+<errors>
+	<error name="ENF" id="404" message="Error not found" />
+</errors>

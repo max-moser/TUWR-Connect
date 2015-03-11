@@ -1,4 +1,4 @@
-<!ELEMENT messages (command*)>
+<!ELEMENT messages (message*)>
 
 <!ELEMENT message (param*)>
 	<!ATTLIST message name ID #REQUIRED>
@@ -8,6 +8,6 @@
 	<!ATTLIST param name CDATA #REQUIRED>
 	<!ATTLIST param offset CDATA #REQUIRED>
 	<!ATTLIST param length CDATA #REQUIRED>
-	<!ATTLIST param type ("errorcode" | "value") #REQUIRED>
+	<!ATTLIST param type ("error" | "message" | "torque" | "rotation" | "id" | "iq") #REQUIRED>
+	<!ATTLIST param motor ("R" | "L") #REQUIRED>
 	<!ATTLIST param fixpoint CDATA "-1">
-
