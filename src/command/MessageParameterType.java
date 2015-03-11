@@ -2,5 +2,5 @@ package command;
 
 public enum MessageParameterType {
 
-	ERRORCODE, VALUE;
+	ERROR, MESSAGE, TORQUE, ROTATION, ID, IQ;
 }

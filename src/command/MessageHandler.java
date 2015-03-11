@@ -44,7 +44,8 @@ public class MessageHandler extends XMLHandler{
 			
 			String pname = null;
 			int offset = -1, length = -1, fixpoint = -1;
-			String type = MessageParameterType.ERRORCODE.toString();
+			String type = MessageParameterType.ERROR.toString();
+			String motor = MessageParameterMotor.LEFT.toString();
 			
 			if(atts.getValue("name") != null){
 				pname = atts.getValue("name");
@@ -61,8 +62,11 @@ public class MessageHandler extends XMLHandler{
 			if(atts.getValue("type") != null){
 				type = atts.getValue("type");
 			}
+			if(atts.getValue("motor") != null){
+				motor = atts.getValue("motor");
+			}
 			
-			MessageParameter mp = new MessageParameter(pname, offset, length, type, fixpoint);
+			MessageParameter mp = new MessageParameter(pname, offset, length, type, motor, fixpoint);
 			this.paramList.add(mp);
 			
 		}

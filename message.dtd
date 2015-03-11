@@ -9,5 +9,5 @@
 	<!ATTLIST param offset CDATA #REQUIRED>
 	<!ATTLIST param length CDATA #REQUIRED>
 	<!ATTLIST param type ("error" | "message" | "torque" | "rotation" | "id" | "iq") #REQUIRED>
-	<!ATTLIST param motor ("R" | "L") #REQUIRED>
+	<!ATTLIST param motor ("right" | "left") #REQUIRED>
 	<!ATTLIST param fixpoint CDATA "-1">

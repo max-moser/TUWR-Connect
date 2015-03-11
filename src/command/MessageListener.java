@@ -30,7 +30,7 @@ public class MessageListener implements CANObservable{
 		new XMLParser(m).parse("message.xml");
 		this.messages = m.getResult();
 		this.running = true;
-		
+
 		this.ltr = new ListenThreadRunnable(this);
 		this.listenThread = new Thread(ltr);
 		this.listenThread.start();
@@ -39,7 +39,7 @@ public class MessageListener implements CANObservable{
 	public void stop(){
 		this.running = false;
 	}
-	
+
 	public void setCANHandler(PeakCanHandler handle){
 		this.handle = handle;
 	}
@@ -53,21 +53,29 @@ public class MessageListener implements CANObservable{
 	public void unregisterObserver(CANObserver o) {
 		this.observers.remove(o);
 	}
-	
-	private void notifyObserversError(){
-			
+
+	private void notifyObserversError(List<String> errors, boolean modL){
+		for(CANObserver o: this.observers){
+			o.notifyError(errors, modL);
+		}
 	}
-	
-	private void notifyObserversConsole(){
-		
+
+	private void notifyObserversConsole(List<String> msg, boolean modL){
+		for(CANObserver o: this.observers){
+			o.notifyConsole(msg, modL);
+		}
 	}
-	
-	private void notifyObserversActual(){
-		
+
+	private void notifyObserversActual(double torque, double rotation, boolean modL){
+		for(CANObserver o: this.observers){
+			o.notifyActual(torque, rotation, modL);
+		}
 	}
-	
-	private void notifyObserversCurrent(){
-		
+
+	private void notifyObserversCurrent(double id, double iq, boolean modL){
+		for(CANObserver o: this.observers){
+			o.notifyCurrent(id, iq, modL);
+		}
 	}
 
 	/**
@@ -80,32 +88,42 @@ public class MessageListener implements CANObservable{
 
 		private final MessageListener ml;
 		private CANMessage cMsg;
-		
+
 		public ListenThreadRunnable(MessageListener ml){
 			this.ml = ml;
 		}
-		
+
 		@Override
 		public void run() {
 			while(this.ml.running){
 				cMsg = this.ml.handle.read();
 				Message msg = null;
-				
+
 				for(Message m: ml.messages){
 					if(m.getID() == cMsg.getID()){
 						msg = m;
 						break;
 					}
 				}
-				
+
 				if(msg != null){
 					for(MessageParameter p: msg.getParameters()){
-						if(p.getType().equals(MessageParameterType.ERRORCODE)){
-							
-							
-						}else{
-							// is VALUE
-							
+						// TODO
+						switch(p.getType()){
+						case ERROR:
+							break;
+						case MESSAGE:
+							break;
+						case TORQUE:
+							break;
+						case ROTATION:
+							break;
+						case ID:
+							break;
+						case IQ:
+							break;
+						default:
+
 						}
 					}
 				}

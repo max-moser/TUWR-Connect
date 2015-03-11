@@ -23,11 +23,16 @@ import etc.FixPoint;
  * 				and the rest is the fractional part.
  * 			Hint: A fixpoint of -1 means that there is no fractional part.
  * 
- * - Type:
- * 			Has one of two values: VALUE or ERRORCODE
- * 			ERRORCODE means that the value should be interpreted as integer code for an error
+ * - type:
+ * 			Has one of the following values: ERROR, MESSAGE, TORQUE, ROTATION, ID, IQ
+ * 			ERROR means that the value should be interpreted as integer code for an error
  * 				(the fixpoint parameter will be ignored)
- * 			VALUE means that the value is a fixpoint value
+ * 			MESSAGE 
+ * 			// TODO FINISH DESCRIPTION
+ * 
+ * - motor:
+ * 			Has one of two values: LEFT or RIGHT
+ * 			Indicates if the value is for the left or right motor
  * 
  * - value:
  * 			The parameter's actual value, also referred to as "real value".
@@ -46,6 +51,7 @@ public class MessageParameter {
 	private final int offset, length, fixpoint;
 	private FixPoint value;
 	private MessageParameterType type;
+	private MessageParameterMotor motor;
 	
 	public MessageParameter(MessageParameter toClone){
 		this.name = toClone.name;
@@ -54,14 +60,16 @@ public class MessageParameter {
 		this.type = toClone.type;
 		this.fixpoint = toClone.fixpoint;
 		this.value = toClone.value;
+		this.motor = toClone.motor;
 	}
 	
-	public MessageParameter(String name, int offset, int length, String type, int fixpoint){
+	public MessageParameter(String name, int offset, int length, String type, String motor, int fixpoint){
 		this.name = name;
 		this.offset = offset;
 		this.length = length;
 		this.type = MessageParameterType.valueOf(type.toUpperCase());
-		this.fixpoint = (type.equals(MessageParameterType.ERRORCODE))?(-1):(fixpoint);
+		this.motor = MessageParameterMotor.valueOf(type.toUpperCase());
+		this.fixpoint = (type.equals(MessageParameterType.ERROR) || type.equals(MessageParameterType.MESSAGE))?(-1):(fixpoint);
 		this.value = new FixPoint("0");
 	}
 	
@@ -82,6 +90,10 @@ public class MessageParameter {
 	
 	public MessageParameterType getType(){
 		return this.type;
+	}
+	
+	public MessageParameterMotor getMotor(){
+		return this.motor;
 	}
 	
 	public int getFixpoint() {
@@ -116,6 +128,7 @@ public class MessageParameter {
 		buf.append("L:" + this.length + ", ");
 		buf.append("F:" + this.fixpoint + ", ");
 		buf.append("T:" + this.type + ", ");
+		buf.append("M:" + this.motor + ", ");
 		buf.append("V:" + this.value);
 		
 		return buf.toString();
