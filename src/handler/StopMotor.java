@@ -1,9 +1,12 @@
 package handler;
 
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import command.CommandProxy;
 import etc.FixPoint;
+import etc.LogCenter;
 import gui.GUI;
 
 /**
@@ -34,7 +37,14 @@ public class StopMotor {
 	 * @param left is it the left motor?
 	 */
 	public void stopMotor(boolean left){
-		
+		Logger l = LogCenter.getInstance().getLogger();
+		String mot = "";
+		if(left){
+			mot = "left";
+		}else{
+			mot = "right";
+		}
+		l.log(Level.INFO,"Stopping "+mot+" motor.");
 		double torque = 0;
 		
 		if(left){

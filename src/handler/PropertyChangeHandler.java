@@ -11,6 +11,8 @@ import java.awt.event.ActionListener;
 import command.CommandProxy;
 
 /**
+ * Handler for changing baud-rates
+ * 
  * @author Iorgreths
  * @version 1.0
  *
@@ -28,7 +30,7 @@ public class PropertyChangeHandler implements ActionListener {
 		
 		//System.out.println("test");
 		String rate = gui.getBaudRate();
-		CommandProxy.changeBaudRate(rate);
+		CommandProxy.getInstance().changeBaudRate(rate);
 		
 	}
 

@@ -2,12 +2,16 @@ package command;
 
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.xml.parsers.ParserConfigurationException;
 
 import org.xml.sax.SAXException;
 
 import etc.FixPoint;
+import etc.LogCenter;
 import peak.can.basic.PeakCanHandler;
 import peak.can.basic.TPCANBaudrate;
 import peak.can.basic.TPCANHandle;
@@ -83,7 +87,7 @@ public class CommandProxy {
 	 * 
 	 * @param rate the new baud-rate. (usable rates are listed above)
 	 */
-	public static void changeBaudRate(String rate){
+	public void changeBaudRate(String rate){
 		
 		switch(rate){
 		case "1M":
@@ -132,7 +136,7 @@ public class CommandProxy {
 			baud = TPCANBaudrate.PCAN_BAUD_1M;
 			break;
 		}
-		CommandProxy.reconnect();
+		this.reconnect();
 		
 	}
 	
@@ -140,8 +144,8 @@ public class CommandProxy {
 	 * This command should only be used after the "changeBaudRate" command.
 	 * This will create a new CommandProxy instance for the wished baud-rate.
 	 */
-	private static void reconnect(){
-		instance = new CommandProxy();
+	private void reconnect(){
+		center.setCANHandler(new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, baud));
 	}
 	
 	/**
@@ -158,7 +162,11 @@ public class CommandProxy {
 		if(params == null){
 			params = new HashMap<String,FixPoint>();
 		}
-		
+		Logger l = LogCenter.getInstance().getLogger();
+		l.log(Level.INFO, "Sending command: "+cmd);
+		for(Entry<String, FixPoint> e : params.entrySet()){
+			l.log(Level.INFO, "with parameter: "+e.getKey()+"-"+e.getValue().toString());
+		}
 		return center.sendCommand(cmd, params);
 	}
 
