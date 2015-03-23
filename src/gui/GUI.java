@@ -1026,7 +1026,11 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 			
 		}catch(NumberFormatException nfe){
 			
-			id = Double.valueOf(ct_id_output.getText());
+			try{
+				id = Double.valueOf(ct_id_output.getText());
+			}catch(NumberFormatException nfe2){
+				id = Double.valueOf("0");
+			}
 			
 		}
 		
@@ -1074,7 +1078,11 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 			
 		}catch(NumberFormatException nfe){
 			
-			id = Double.valueOf(ct_id_output1.getText());
+			try{
+				id = Double.valueOf(ct_id_output1.getText());
+			}catch(NumberFormatException nfe2){
+				id = Double.valueOf("0");
+			}
 			
 		}
 		

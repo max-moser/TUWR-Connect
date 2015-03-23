@@ -63,7 +63,7 @@ public class Main {
 		}
 		try{
 			xml = new XMLParser(new MessageHandler());
-			xml.parse("messages.xml");
+			xml.parse("message.xml");
 		} catch (ParserConfigurationException e) {
 			log.log(Level.WARNING, "XML-Parser configuration isn't ok");
 		} catch (SAXException e) {

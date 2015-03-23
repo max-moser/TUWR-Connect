@@ -26,6 +26,9 @@ public class TestMain {
 
 		boolean quit = true;
 
+		PeakCanHandler pcHendl = new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, TPCANBaudrate.PCAN_BAUD_100K);
+		CommandCenter cc = new CommandCenter(pcHendl);
+		
 		try{
 			CommandHandler handler = new CommandHandler();
 			XMLParser xml = new XMLParser(handler);

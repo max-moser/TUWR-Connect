@@ -111,15 +111,17 @@ public class CommandToCAN {
 		}
 		
 		// calculate checksum & place it in the CAN message
-		byte[] csum = calcChecksum(ret);
+		byte csum = calcChecksum(ret);
 		
 		// clear the first 12 bits
 		ret[0] = (byte)(ret[0] & ((byte)0b0000_0000));
 		ret[1] = (byte)(ret[1] & ((byte)0b0000_1111));
 		
 		// set them to the value of the checksum
-		ret[0] = (byte)(ret[0] | csum[0]);
-		ret[1] = (byte)(ret[1] | csum[1]);
+		ret[0] = (byte)(ret[0] | csum);
+		// TODO
+		// set the first 4 bits of ret[1] to the counter (C)
+//		ret[1] = (byte)(ret[1] | csum[1]);
 		
 		return ret;
 	}
@@ -129,32 +131,30 @@ public class CommandToCAN {
 	 * get algorithm from Igor
 	 * @return
 	 */
-	private static byte[] calcChecksum(byte[] b){
-		byte[] csum = new byte[2];
+	private static byte calcChecksum(byte[] b){
+		/*
+		 * Original-Algorithmus von Infineon
+		 * 
+		 * INLINE uint8 CAN_MsgChecksum(const uint8* Data) {
+		 * 	uint8 Result;
+		 * 	Result = Data[1] ^ Data[2] ^ Data[3] ^ Data[4] ^ Data[5] ^ Data[6] ^ Data[7] ^ 0x00u;
+		 * 	return Result;
+		 * }
+		 * 
+		 */
+		
+		byte csum = 0;
 		byte mask = 0x1;
-		for(int i=1; i<8; i++){
+		for(int i=1; i<CommandToCAN.bpb; i++){
 			mask <<= 1;
 			mask = (byte)(mask | 0x1);
 		}
 		
-		csum[0] = (byte)0b1111_1111;
-		csum[1] = (byte)0b1111_0000;
-		
-		int cnt = 0;
-		byte tmp = (byte)0b0000_0001;
+		csum = (byte)0;
 		
 		for(int i=0; i<b.length; i++){
-			tmp = (byte)0b0000_0001;
-			for(int j=1; j<8; j++){
-				if((tmp & b[i]) != 0){
-					cnt ++;
-				}
-				tmp <<= 1;
-			}
+			csum ^= ((byte) b[i]);
 		}
-		
-		csum[1] = (byte)((cnt << 4) & mask);
-		csum[0] = (byte)((cnt >> 4) & mask);
 		
 		return csum;
 	}
