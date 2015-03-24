@@ -76,4 +76,9 @@ public class ControlInformation {
 		return id;
 	}
 	
+	@Override
+	public String toString(){
+		return "[CONTROL INFORMATION] MODUS="+modus+"; VALUE="+value+"; ID_CURRENT="+id;
+	}
+	
 }

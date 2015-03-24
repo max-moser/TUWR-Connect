@@ -1,11 +1,15 @@
 package handler;
 
 import etc.FixPoint;
+import etc.LogCenter;
 import gui.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.LogManager;
+import java.util.logging.Logger;
 
 import command.CommandProxy;
 
@@ -34,11 +38,13 @@ public class ControlHandler implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		
 		//System.out.println("HANDLE");
+		Logger l = LogCenter.getInstance().getLogger();
 		
 		/* Send information about left motor */
 		if(gui.leftStarted()){
-			
+			l.log(Level.INFO,"left motor control information being sent.");
 			ControlInformation info = gui.leftInformation();
+			l.log(Level.INFO,"[INFORMATION]"+info.toString());
 			HashMap<String,FixPoint> params = new HashMap<String,FixPoint>();
 			
 			if(info.controlWithTorque()){
@@ -61,10 +67,10 @@ public class ControlHandler implements ActionListener {
 		
 		/* Send information about right motor */
 		if(gui.rightStarted()){
-			
+			l.log(Level.INFO,"left motor control information being sent.");
 			ControlInformation info = gui.rightInformation();
 			HashMap<String,FixPoint> params = new HashMap<String,FixPoint>();
-			
+			l.log(Level.INFO,"[INFORMATION]"+info.toString());
 			if(info.controlWithTorque()){
 				
 				params.put("modr", new FixPoint("0"));

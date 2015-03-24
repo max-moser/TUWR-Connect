@@ -7,8 +7,12 @@ import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map.Entry;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
+
+import etc.LogCenter;
 
 /**
  *
@@ -854,8 +858,10 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     @Override
 	public void notifyError(List<String> errors, boolean left) {
 		
+    	Logger l = LogCenter.getInstance().getLogger();
+    	
     	if(left){
-    		
+    		l.log(Level.INFO,"error-message incoming for left motor.");
     		this.errors.setText("");
     		
     		for(String error : errors){
@@ -865,7 +871,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         	}
     		
     	}else{
-    		
+    		l.log(Level.INFO,"error-message incoming for right motor.");
     		this.errors_r.setText("");
     		
     		for(String error : errors){
@@ -880,9 +886,10 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 
 	@Override
 	public void notifyConsole(List<String> msg, boolean left) {
+		Logger l = LogCenter.getInstance().getLogger();
 		
 		if(left){
-    		
+    		l.log(Level.INFO,"notifications incoming for left motor.");
     		this.console.setText("");
     		
     		for(String m : msg){
@@ -892,7 +899,7 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         	}
     		
     	}else{
-    		
+    		l.log(Level.INFO,"notifications incoming for right motor.");
     		this.console_r.setText("");
     		
     		for(String m : msg){
@@ -907,14 +914,15 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 
 	@Override
 	public void notifyActual(double torque, double rotation, boolean left) {
+		Logger l = LogCenter.getInstance().getLogger();
 		
 		if(left){
-			
+			l.log(Level.INFO,"new actual-values (rotation,torque) for left motor.");
 			torque_output.setText(String.valueOf(torque));
 			rotation_output.setText(String.valueOf(rotation));
 			
 		}else{
-			
+			l.log(Level.INFO,"new actual-values (rotation,torque) for right motor.");
 			torque_output_r.setText(String.valueOf(torque));
 			rotation_output_r.setText(String.valueOf(rotation));
 			
@@ -924,14 +932,14 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 
 	@Override
 	public void notifyCurrent(double id, double iq, boolean left) {
-		
+		Logger l = LogCenter.getInstance().getLogger();
 		if(left){
-			
+			l.log(Level.INFO, "new actual-values of currents for left motor.");
 			ct_id_output.setText(String.valueOf(id));
 			ct_iq_output.setText(String.valueOf(iq));
 			
 		}else{
-			
+			l.log(Level.INFO, "new actual-values of currents for right motor.");
 			ct_id_output1.setText(String.valueOf(id));
 			ct_iq_output1.setText(String.valueOf(iq));
 			

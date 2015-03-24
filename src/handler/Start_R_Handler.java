@@ -1,11 +1,14 @@
 package handler;
 
 import etc.FixPoint;
+import etc.LogCenter;
 import gui.GUI;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 import command.CommandProxy;
 
@@ -33,7 +36,8 @@ public class Start_R_Handler implements ActionListener {
 	public void actionPerformed(ActionEvent arg0) {
 		
 		int indicator = gui.adaptStartRight();
-		
+		Logger l = LogCenter.getInstance().getLogger();
+		l.log(Level.INFO, "Start left-motor with indicator "+indicator);
 		/*
 		 * 0 - start the motor</li>
          * 1 - stop the motor</li>

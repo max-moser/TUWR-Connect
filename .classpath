@@ -5,5 +5,19 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/jfreechart-1.0.19-demo.jar"/>
 	<classpathentry kind="lib" path="lib/sqlite-jdbc-3.8.7.jar"/>
 	<classpathentry kind="lib" path="lib/RXTXcomm.jar"/>
+<<<<<<< HEAD
+=======
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/hamcrest-core-1.3.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jcommon-1.0.23.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jfreechart-1.0.19-experimental.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jfreechart-1.0.19-swt.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jfreechart-1.0.19.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/jfreesvg-2.0.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/junit-4.11.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/orsoncharts-1.4-eval-nofx.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/orsonpdf-1.6-eval.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/servlet.jar"/>
+	<classpathentry kind="lib" path="lib/jfreechart-1.0.19/lib/swtgraphics2d.jar"/>
+>>>>>>> 34f59fd73016debaf3c411c5a01ebb97fc391fcb
 	<classpathentry kind="output" path="bin"/>
 </classpath>
