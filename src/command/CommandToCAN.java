@@ -114,8 +114,8 @@ public class CommandToCAN {
 		byte csum = calcChecksum(ret);
 		
 		// clear the first 12 bits
-		ret[0] = (byte)(ret[0] & ((byte)0b0000_0000));
-		ret[1] = (byte)(ret[1] & ((byte)0b0000_1111));
+		ret[0] = (byte)(ret[0] & ((byte)0));//((byte)0b00000000));
+		ret[1] = (byte)(ret[1] & ((byte)15));//((byte)0b00001111));
 		
 		// set them to the value of the checksum
 		ret[0] = (byte)(ret[0] | csum);

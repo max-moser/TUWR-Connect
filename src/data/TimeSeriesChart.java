@@ -79,7 +79,7 @@ public class TimeSeriesChart extends ApplicationFrame {
 			}
 		});
 
-		final JComboBox<String> combo = new JComboBox<>();
+		final JComboBox<String> combo = new JComboBox<String>();
 		combo.addItem("Fast");
 		combo.addItem("Slow");
 		combo.addActionListener(new ActionListener() {

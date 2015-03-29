@@ -8,16 +8,15 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.HashMap;
 import java.util.logging.Level;
-import java.util.logging.LogManager;
 import java.util.logging.Logger;
 
 import command.CommandProxy;
 
 /**
  * Version History: </b>
- * V1.1: Changed the handler to serve the purpose of sending control information
- *    ID50 -> left motor
- *    ID60 -> right motor
+ * V1.1: Changed the handler to serve the purpose of sending control information </b>
+ *    ID50 -> left motor </b>
+ *    ID60 -> right motor </b>
  * by pressing enter.
  * 
  * 
@@ -50,12 +49,12 @@ public class ControlHandler implements ActionListener {
 			if(info.controlWithTorque()){
 				
 				params.put("modl", new FixPoint("0"));
-				params.put("fixpoint", new FixPoint("6"));
+				params.put("fixpoint", new FixPoint("10"));
 				
 			}else{
 				
 				params.put("modl", new FixPoint("1"));
-				params.put("fixpoint", new FixPoint("1"));
+				params.put("fixpoint", new FixPoint("15"));
 				
 			}
 			

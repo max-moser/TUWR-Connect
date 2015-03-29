@@ -37,6 +37,7 @@ public class CommandCenter implements CANObservable{
 	private final TorqueMode torMode;
 	private final List<Command> commands;
 	private final MessageListener listen;
+	private PeakCanHandler canHandler;
 	
 	/**
 	 * Creates a new CommandCenter with the specified CanHandler.
@@ -54,8 +55,8 @@ public class CommandCenter implements CANObservable{
 		CommandHandler c = new CommandHandler();
 		new XMLParser(c).parse("command.xml"); // TODO absolute install path
 		this.commands = c.getResult();
+		this.canHandler = canHandler;
 		this.listen = new MessageListener(canHandler);
-		
 		this.rotMode = new RotationMode(canHandler);
 		this.torMode = new TorqueMode(canHandler);
 		this.activeMode = rotMode;
@@ -137,6 +138,8 @@ public class CommandCenter implements CANObservable{
 		this.rotMode.setCANHandler(handle);
 		this.torMode.setCANHandler(handle);
 		this.listen.setCANHandler(handle);
+		this.canHandler.uninit();
+		this.canHandler = handle;
 	}
 	
 	@Override

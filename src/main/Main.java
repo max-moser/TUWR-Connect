@@ -114,7 +114,9 @@ public class Main {
 			}
 			
 		}
-		new GUI(functions).setVisible(true);
+		GUI g = new GUI(functions);
+		//new GUI(functions).setVisible(true);
+		g.setVisible(true);
 
 	}
 

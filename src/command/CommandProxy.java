@@ -26,6 +26,21 @@ import peak.can.basic.TPCANHandle;
  *
  */
 
+//TODO
+/*
+ * edit sending commands:
+ * instead of one-time send, send the command in an intervall of 10ms
+ * instead of .sendCommand -> .changeCommand
+ * The CommandCenter is only allowed to send commands, if one is set
+ * 
+ * ->
+ * commandProxy has to delegate to the message-listener too
+ * add message-listener methods:
+ * add change messageListener-handler to changeBaudRate
+ * add registerToListener
+ * add unregisterToListener
+ */
+
 public class CommandProxy {
 	
 	private static CommandProxy instance;
@@ -89,6 +104,9 @@ public class CommandProxy {
 	 */
 	public void changeBaudRate(String rate){
 		
+		String baudrate = "PCAN_BAUD_" + rate;
+		baud = TPCANBaudrate.valueOf(baudrate);
+		/*
 		switch(rate){
 		case "1M":
 			baud = TPCANBaudrate.PCAN_BAUD_1M;
@@ -136,6 +154,7 @@ public class CommandProxy {
 			baud = TPCANBaudrate.PCAN_BAUD_1M;
 			break;
 		}
+		*/
 		this.reconnect();
 		
 	}

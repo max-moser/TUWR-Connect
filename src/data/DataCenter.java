@@ -12,7 +12,7 @@ public class DataCenter{
 	}
 	
 	private RunnableConnection con;
-	protected DoubleLinkedList<ConnectData> data = new DoubleLinkedList<>(); 
+	protected DoubleLinkedList<ConnectData> data = new DoubleLinkedList<ConnectData>(); 
 	private SQLConnection db;
 	private static DataCenter instance;
 	private Thread connectionThread;

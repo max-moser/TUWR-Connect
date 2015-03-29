@@ -41,7 +41,7 @@ public class StartHandler implements ActionListener {
 		switch(indicator){
 		case 0:
 			HashMap<String,FixPoint> param = new HashMap<String,FixPoint>();
-			param.put("left", new FixPoint("1"));
+			param.put("left", new FixPoint("0"));
 			CommandProxy.getInstance().sendCommand("start", param);
 			gui.baudChoosable(false);
 			break;

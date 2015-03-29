@@ -13,6 +13,7 @@ public class CANMessage {
 	public CANMessage(int id, byte[] data){
 		this.id = id;
 		this.data = data;
+		//System.out.println("INCOMING: "+id+" :: "+BinaryToString.bytesToString(data));
 	}
 	
 	public int getID(){

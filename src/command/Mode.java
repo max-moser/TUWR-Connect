@@ -2,6 +2,7 @@ package command;
 
 import java.util.List;
 
+import etc.BinaryToString;
 import peak.can.basic.PeakCanHandler;
 
 /**
@@ -52,19 +53,26 @@ public abstract class Mode {
 	 * @return TRUE, if the message is compliant and the transmission successful, FALSE otherwise
 	 */
 	public boolean sendCommand(Command c){
-		if(!this.checkID(c.getID())){
-			return false;
-		}
+		// TODO
+		// check algorithm
+//		if(!this.checkID(c.getID())){
+//			return false;
+//		}
 		
-		if(!this.checkParameters(c.getParameters())){
-			return false;
-		}
+		// TODO
+		// this failed
+		// why?
+		// nobody knows
+//		if(!this.checkParameters(c.getParameters())){
+//			return false;
+//		}
 		
 		// convert the command to CAN
 		// and execute it
 		byte id = CommandToCAN.getID(c);
 		byte[] data = CommandToCAN.getData(c);
-		
+
+		System.out.println(BinaryToString.byteToString(id) + " :: " + BinaryToString.bytesToString(data));
 		return this.sendData(id, data);
 	}
 	

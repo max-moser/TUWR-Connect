@@ -1,6 +1,6 @@
 <!DOCTYPE commands SYSTEM "command.dtd">
 <commands>
-	<command name="start" id="50">
+	<command name="start" id="80">
 		<param name="r2d" offset="12" length="1" default="1"  />
 		<param name="modr" offset="13" length="1" default="0" />
 		<param name="modl" offset="14" length="1" default="0" />
@@ -8,7 +8,7 @@
 		<param name="left" offset="32" length="16" default="0" fixpoint="6" />
 		<param name="right" offset="48" length="16" default="0" fixpoint="6" />
 	</command>
-	<command name="start_r" id="60">
+	<command name="start_r" id="96">
 		<param name="r2d" offset="12" length="1" default="1"  />
 		<param name="modr" offset="13" length="1" default="0" />
 		<param name="modl" offset="14" length="1" default="0" />
@@ -16,7 +16,7 @@
 		<param name="left" offset="32" length="16" default="0" fixpoint="6" />
 		<param name="right" offset="48" length="16" default="0" fixpoint="6" />
 	</command>
-	<command name="stop" id="50">
+	<command name="stop" id="80">
 		<param name="r2d" offset="12" length="1" default="0"  />
 		<param name="modr" offset="13" length="1" default="0" />
 		<param name="modl" offset="14" length="1" default="0" />
@@ -24,7 +24,7 @@
 		<param name="left" offset="32" length="16" default="0" fixpoint="6" />
 		<param name="right" offset="48" length="16" default="0" fixpoint="6" />
 	</command>
-	<command name="stop_r" id="60">
+	<command name="stop_r" id="96">
 		<param name="r2d" offset="12" length="1" default="0"  />
 		<param name="modr" offset="13" length="1" default="0" />
 		<param name="modl" offset="14" length="1" default="0" />
@@ -32,20 +32,20 @@
 		<param name="left" offset="32" length="16" default="0" fixpoint="6" />
 		<param name="right" offset="48" length="16" default="0" fixpoint="6" />
 	</command>
-	<command name="control" id="50">
+	<command name="control" id="80">
 		<param name="r2d" offset="12" length="1" default="1"  />
 		<param name="modr" offset="13" length="1" default="0" />
 		<param name="modl" offset="14" length="1" default="0" />
 		<param name="bp" offset="15" length="1" default="0" />
-		<param name="left" offset="32" length="16" fixpoint="6" />
-		<param name="right" offset="48" length="16" fixpoint="6" />
+		<param name="left" offset="48" length="16" fixpoint="10" />
+		<param name="right" offset="32" length="16" fixpoint="10" ></param>
 	</command>
-	<command name="control_r" id="60">
+	<command name="control_r" id="96">
 		<param name="r2d" offset="12" length="1" default="1"  />
 		<param name="modr" offset="13" length="1" default="0" />
 		<param name="modl" offset="14" length="1" default="0" />
 		<param name="bp" offset="15" length="1" default="0" />
-		<param name="left" offset="32" length="16" fixpoint="6" />
-		<param name="right" offset="48" length="16" fixpoint="6" />
+		<param name="left" offset="48" length="16" fixpoint="10" />
+		<param name="right" offset="32" length="16" fixpoint="10" />
 	</command>
 </commands>

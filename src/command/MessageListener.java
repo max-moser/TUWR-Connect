@@ -41,7 +41,12 @@ public class MessageListener implements CANObservable{
 	}
 
 	public void setCANHandler(PeakCanHandler handle){
+		//TODO add change-baud rate
+		// this.stop()
 		this.handle = handle;
+		// this.listenThread.start()
+		// is the thread now running again?
+		//NOTE: the PeakCanHandler will be uninitialized in the CommandProxy -> nothing to do here
 	}
 
 	@Override
@@ -111,16 +116,22 @@ public class MessageListener implements CANObservable{
 						// TODO
 						switch(p.getType()){
 						case ERROR:
+							//NOTE: notify error
 							break;
 						case MESSAGE:
+							//NOTE: notify console
 							break;
 						case TORQUE:
+							//NOTE: notify actual
 							break;
 						case ROTATION:
+							//NOTE: notify actual
 							break;
 						case ID:
+							//NOTE: notify current
 							break;
 						case IQ:
+							//NOTE: notify current
 							break;
 						default:
 
