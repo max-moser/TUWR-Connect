@@ -2,19 +2,24 @@ package gui;
 
 import handler.FnctDialogHandler;
 
+import java.awt.BorderLayout;
+import java.awt.Dimension;
 import java.awt.Label;
+import java.awt.Panel;
 import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
+import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JFrame;
+import javax.swing.JDialog;
 import javax.swing.JTextField;
 
 import etc.FixPoint;
 
-public class FunctionDialog extends JFrame {
+public class FunctionDialog extends JDialog {
 
 	/**
 	 * 
@@ -48,10 +53,12 @@ public class FunctionDialog extends JFrame {
 		}else{
 			this.setIconImage(new ImageIcon(path+"/resources/icon.png").getImage());
 		}
-		this.setAlwaysOnTop(true);
+		labels = new ArrayList<Label>();
+		input = new ArrayList<JTextField>();
 		
 		/* init components */
 		initcomponents();
+		this.setLocationRelativeTo(null);
 		
 		/* set listener*/
 		accept.addActionListener(new FnctDialogHandler(this));
@@ -64,24 +71,39 @@ public class FunctionDialog extends JFrame {
 	 */
 	private void initcomponents(){
 		
+		Panel inputpanel = new Panel();
+		BoxLayout bl = new BoxLayout(inputpanel, BoxLayout.Y_AXIS);
+		inputpanel.setLayout(bl);
+		
 		for(String param : params){
 			
 			Label newlabel = new Label();
 			newlabel.setText(param+ ":");
 			JTextField newinput = new JTextField();
+			Dimension size = new Dimension(200, 30);
+			newinput.setPreferredSize(size);
+			newinput.setSize(size);
 			this.add(newlabel);
 			this.add(newinput);
 			labels.add(newlabel);
 			input.add(newinput);
 			
-			//TODO layoutmanager positioning
+			Panel temp = new Panel();
+			temp.add("West",newlabel);
+			temp.add("East",newinput);
+			
+			inputpanel.add(temp);
 			
 		}
 		accept = new JButton();
-		accept.setText("ok");
-		this.add(accept);
-		//TODO layoutmanager positioning
+		accept.setText("send command");
+		Panel bpanel = new Panel();
+		bpanel.add(accept);
 		
+		this.getContentPane().add(inputpanel);
+		this.getContentPane().add(bpanel, BorderLayout.PAGE_END);
+		
+		pack();
 		
 	}
 	

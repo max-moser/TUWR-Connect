@@ -11,6 +11,11 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import javax.swing.ImageIcon;
+import javax.swing.JDialog;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
+import javax.swing.JSeparator;
 
 import etc.LogCenter;
 
@@ -107,9 +112,15 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         expand.addActionListener(new ExpandHandler(this));
         runbutton.addActionListener(new StartHandler(this));
         runbutton_r.addActionListener(new Start_R_Handler(this));
-        fnct_list.addListSelectionListener(new FunctionHandler(this));
-        fnct_list_r.addListSelectionListener(new Function_R_Handler(this));
+        //fnct_list.addListSelectionListener(new FunctionHandler(this));
+        //fnct_list_r.addListSelectionListener(new Function_R_Handler(this));
         baudchosser.addActionListener(new PropertyChangeHandler(this));
+        baudchosser.setVisible(false);
+        
+        /*
+         * Set the menu-bar
+         */
+        initMenuBar();
         
         /* set enter function for frame */
         //NOTE: experimental code
@@ -118,9 +129,11 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
         control_accept.addActionListener(new ControlHandler(this));
         this.getRootPane().setDefaultButton(control_accept);
         //controltab.getRootPane().setDefaultButton(control_accept);
-        
+       
         // request focus
         this.requestFocus();
+        JDialog connect = new ConnectDialog(this);
+        connect.setVisible(true);
         
     }
 
@@ -751,6 +764,19 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     }
     
     /**
+     * Returns whether the right motor expansion is active.
+     * @return if the right motor expansion is active
+     */
+    public boolean isExpanded(){
+    	return !expand.isVisible();
+    }
+    
+    public boolean isBaudEnabled(){
+    	//System.out.println(baudchosser.isEnabled());
+    	return baudchosser.isEnabled();
+    }
+    
+    /**
      * Adapts the text from the runbutton and returns an integer, which
      * indicates the message to be send.
      * <ul>
@@ -1114,6 +1140,50 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
 	public void baudChoosable(boolean choosable){
 		baudchosser.setEnabled(choosable);
 	}
+	
+	/**
+	 * Returns the index of the selected tab For this information 
+	 * about the motor is needed, to be more exact which motor tab shall
+	 * be asked. <br/>
+	 * <br/>
+	 * 0 -> control <br/>
+	 * 1 -> functions
+	 * 
+	 * @param left left motor tab?
+	 * @return the index of the currently selected tab
+	 */
+	public int selectedTab(boolean left){
+		if(left){
+			return tabs.getSelectedIndex();
+		}else{
+			return tabs_r.getSelectedIndex();
+		}
+	}
+	
+	/**
+	 * Method for initializing the menu bar.
+	 */
+	private void initMenuBar(){
+		// init menu items
+		menu = new JMenuBar();
+		options = new JMenu("Options");
+		menu_close = new JMenuItem("Close");
+		menu_close.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_X, java.awt.event.InputEvent.CTRL_MASK));
+		menu_close.addActionListener(new MenuCloseHandler(this));
+		menu_connect = new JMenuItem("Reconnect");
+		menu_connect.setAccelerator(javax.swing.KeyStroke.getKeyStroke(java.awt.event.KeyEvent.VK_R, java.awt.event.InputEvent.CTRL_MASK));
+		menu_connect.addActionListener(new MenuReconnectHandler(this));
+		JSeparator options_separator = new JSeparator();
+		
+		// add menu items to bar 
+		menu.add(options);
+		options.add(menu_connect);
+		options.add(options_separator);
+		options.add(menu_close);
+		
+		// set the bar for this window
+        this.setJMenuBar(menu);
+	}
 
     // Variables declaration - do not modify                     
     private javax.swing.JTextArea console;
@@ -1179,5 +1249,9 @@ public class GUI extends javax.swing.JFrame implements InformationHandler{
     private javax.swing.JList<String> fnct_list_r;
     private javax.swing.JButton control_accept;
     private javax.swing.JComboBox<String> baudchosser;
+    private javax.swing.JMenuBar menu;
+    private javax.swing.JMenu options;
+    private javax.swing.JMenuItem menu_close;
+    private javax.swing.JMenuItem menu_connect;
     // End of variables declaration                   
 }

@@ -19,6 +19,7 @@ import command.CommandProxy;
  *
  */
 
+@Deprecated
 public class FunctionHandler implements ListSelectionListener {
 
 	private GUI gui;

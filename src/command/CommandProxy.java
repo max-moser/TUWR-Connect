@@ -46,6 +46,7 @@ public class CommandProxy {
 	private static CommandProxy instance;
 	private CommandCenter center;
 	private static TPCANBaudrate baud = TPCANBaudrate.PCAN_BAUD_1M;
+	private static TPCANHandle handler = TPCANHandle.PCAN_USBBUS1;
 	
 	/**
 	 * Creates a new CommandProxy.
@@ -53,7 +54,7 @@ public class CommandProxy {
 	 */
 	private CommandProxy(){
 		try {
-			center = new CommandCenter(new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, baud));
+			center = new CommandCenter(new PeakCanHandler(handler, baud));
 		} catch (IOException e) {
 			java.util.logging.Logger.getLogger(this.getClass().getName()).log(java.util.logging.Level.SEVERE, "Unable to open file");
 			e.printStackTrace();
@@ -159,12 +160,20 @@ public class CommandProxy {
 		
 	}
 	
+	public void changeChannelAndBaudRate(String rate, String channel){
+		
+		channel = "PCAN_USBBUS" + channel;
+		handler = TPCANHandle.valueOf(channel);
+		this.changeBaudRate(rate);
+		
+	}
+	
 	/**
 	 * This command should only be used after the "changeBaudRate" command.
 	 * This will create a new CommandProxy instance for the wished baud-rate.
 	 */
 	private void reconnect(){
-		center.setCANHandler(new PeakCanHandler(TPCANHandle.PCAN_USBBUS1, baud));
+		center.setCANHandler(new PeakCanHandler(handler, baud));
 	}
 	
 	/**
