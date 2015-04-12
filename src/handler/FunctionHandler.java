@@ -52,7 +52,7 @@ public class FunctionHandler implements ListSelectionListener {
 				}else{
 					
 					//NOTE: create a new dialog and block GUI
-					new FunctionDialog(gui, entry.getKey(), entry.getValue()).setVisible(true);
+					new FunctionDialog(gui, entry.getKey(), entry.getValue(), 0).setVisible(true);
 					//gui.setFocusable(false);
 					
 				}

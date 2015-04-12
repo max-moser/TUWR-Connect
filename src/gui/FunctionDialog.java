@@ -32,6 +32,7 @@ public class FunctionDialog extends JDialog {
 	private List<JTextField> input;
 	private JButton accept;
 	private String fnct;
+	private String left_value;
 	
 	/**
 	 * Creates a new dialog with the defined amount of parameters.
@@ -40,7 +41,7 @@ public class FunctionDialog extends JDialog {
 	 * @param fnct the name of the function
 	 * @param params list of parameter-names
 	 */
-	public FunctionDialog(GUI gui, String fnct, List<String> params){
+	public FunctionDialog(GUI gui, String fnct, List<String> params, int left_parameter){
 		
 		this.fnct = fnct;
 		this.params = params;
@@ -55,6 +56,7 @@ public class FunctionDialog extends JDialog {
 		}
 		labels = new ArrayList<Label>();
 		input = new ArrayList<JTextField>();
+		left_value = String.valueOf(left_parameter);
 		
 		/* init components */
 		initcomponents();
@@ -115,6 +117,7 @@ public class FunctionDialog extends JDialog {
 	 */
 	public HashMap<String,FixPoint> getParameters(){
 		HashMap<String,FixPoint> ret = new HashMap<String,FixPoint>();
+		ret.put("left", new FixPoint(left_value));
 		for(int i=0; i<params.size(); i++){
 			
 			if(!input.get(i).getText().equals("")){

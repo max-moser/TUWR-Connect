@@ -49,3 +49,5 @@
 		<param name="right" offset="32" length="16" fixpoint="10" />
 	</command>
 </commands>
+<!--If you want to add your own commands (presumably for the function tab), each command has to include the param 'left'-->
+<!--The parameter left should be have a default value of 0 (this is optional)  -->

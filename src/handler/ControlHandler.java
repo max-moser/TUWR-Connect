@@ -87,12 +87,14 @@ public class ControlHandler implements ActionListener {
 						if(entry.getValue().size() == 0){
 							
 							//NOTE: directly send command -> no dialog
-							CommandProxy.getInstance().sendCommand(entry.getKey(), null);
+							HashMap<String, FixPoint> cparam = new HashMap<String,FixPoint>();
+							cparam.put("left", new FixPoint(String.valueOf(0)));
+							CommandProxy.getInstance().sendCommand(entry.getKey(), cparam);
 							
 						}else{
 							
 							//NOTE: create a new dialog and block GUI
-							new FunctionDialog(gui, entry.getKey(), entry.getValue()).setVisible(true);
+							new FunctionDialog(gui, entry.getKey(), entry.getValue(), 0).setVisible(true);
 							//gui.setFocusable(false);
 							
 						}
@@ -156,12 +158,14 @@ public class ControlHandler implements ActionListener {
 							if(entry.getValue().size() == 0){
 								
 								//NOTE: directly send command -> no dialog
-								CommandProxy.getInstance().sendCommand(entry.getKey(), null);
+								HashMap<String, FixPoint> cparam = new HashMap<String,FixPoint>();
+								cparam.put("left", new FixPoint(String.valueOf(1)));
+								CommandProxy.getInstance().sendCommand(entry.getKey(), cparam);
 								
 							}else{
 								
 								//NOTE: create a new dialog and block GUI
-								new FunctionDialog(gui, entry.getKey(), entry.getValue()).setVisible(true);
+								new FunctionDialog(gui, entry.getKey(), entry.getValue(), 1).setVisible(true);
 								//gui.setFocusable(false);
 								
 							}
